@@ -1,8 +1,7 @@
 package bank.icbc.database.unit.controller;
 
+import bank.icbc.database.service.CustomerService;
 import bank.icbc.database.template.CustomerDAO;
-import bank.icbc.domain.Customer;
-import bank.icbc.exception.DuplicateCustomerException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -19,8 +18,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
-
-import java.sql.Date;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -39,22 +36,22 @@ public class CustomerControllerTest {
     private RequestMappingHandlerAdapter handlerAdapter;
 
     @Autowired
+    CustomerService service;
+
+    @Autowired
     @Qualifier("customerDAO")
     private CustomerDAO customerDAO;
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
+    private String testCustomer = "testCustomer";
 
     @Before
     public void setUp() {
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
-        customerDAO.createTable("customer");
-    }
-
-    @After
-    public void tearDown() {
-        customerDAO.deleteTable("customer");
+        customerDAO.createTable(testCustomer);
+        service.setTableName(testCustomer);
     }
 
     @Test
@@ -70,10 +67,6 @@ public class CustomerControllerTest {
 
     @Test
     public void shouldReturnShowCustomerAsView() throws Exception {
-        Customer customer = new Customer();
-        customer.setNickname("dan");
-        customer.setDateOfBirth(new Date(Date.valueOf("1982-10-02").getTime()));
-
         request.setParameter("nickname", "dan");
         request.setParameter("dateOfBirth", "1980-09-01");
 
@@ -85,5 +78,43 @@ public class CustomerControllerTest {
         ModelAndView modelAndView = handlerAdapter.handle(request, response, controller);
 
         assertThat("ShowCustomer", is(modelAndView.getViewName()));
+    }
+
+//    @Test
+//    public void shouldReturnExceptionAsView() throws Exception {
+//        request.setParameter("nickname", "dan");
+//        request.setParameter("dateOfBirth", "1980-09-01");
+//
+//        request.setRequestURI("/addCustomer");
+//        request.setMethod(HttpMethod.POST.toString());
+//
+//        Object controller = mappingHandler.getHandler(request).getHandler();
+//
+//        handlerAdapter.handle(request, response, controller);
+//        ModelAndView modelAndView = handlerAdapter.handle(request, response, controller);
+//
+//        assertThat("exception", is(modelAndView.getViewName()));
+//    }
+
+    @Test
+    public void shouldReturnWelcomeAsView() throws Exception {
+        request.setRequestURI("/welcome");
+        request.setMethod(HttpMethod.GET.toString());
+        Object controller = mappingHandler.getHandler(request).getHandler();
+
+        ModelAndView modelAndView = handlerAdapter.handle(request, response, controller);
+
+        assertThat("Welcome", is(modelAndView.getViewName()));
+    }
+
+    @Test
+    public void shouldReturnWithdrawAsView() throws Exception {
+        request.setRequestURI("/withdraw");
+        request.setMethod(HttpMethod.GET.toString());
+        Object controller = mappingHandler.getHandler(request).getHandler();
+
+        ModelAndView modelAndView = handlerAdapter.handle(request, response, controller);
+
+        assertThat("Withdraw", is(modelAndView.getViewName()));
     }
 }

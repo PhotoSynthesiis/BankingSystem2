@@ -1,12 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
+
 <html>
 <head>
     <title>Show Customers</title>
 </head>
 <body>
 customer name : ${customer.nickname} <br/>
-customer dateOfBirth : ${customer.dateOfBirth}
+customer dateOfBirth : ${customer.dateOfBirth} </br>
 
-<a href="Welcome.jsp">back</a>
+<c:url value="/welcome" var="welcome"/>
+1. <a href="${welcome}">back</a>
 </body>
 </html>

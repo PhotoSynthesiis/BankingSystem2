@@ -8,5 +8,8 @@
 Welcome to the Banking System! <br/>
 <c:url value="/addCustomer" var="addCustomer"/>
 1. <a href="${addCustomer}">add Customer</a>
+
+<c:url value="/withdraw" var="withdraw"/>
+2. <a href="${withdraw}">withdraw</a>
 </body>
 </html>

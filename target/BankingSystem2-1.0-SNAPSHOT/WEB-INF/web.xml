@@ -18,14 +18,14 @@
     </context-param>
 
     <servlet>
-        <servlet-name>addCustomer</servlet-name>
+        <servlet-name>bankingSystem2</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>addCustomer</servlet-name>
-        <url-pattern>/addCustomer</url-pattern>
+        <servlet-name>bankingSystem2</servlet-name>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 
     <welcome-file-list>

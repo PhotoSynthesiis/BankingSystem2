@@ -35,6 +35,21 @@ public class CustomerController {
         return "ShowCustomer";
     }
 
+    @RequestMapping(value = "/withdraw", method = RequestMethod.GET)
+    public String goToWithdrawPage() {
+        return "Withdraw";
+    }
+
+    @RequestMapping(value = "/withdraw", method = RequestMethod.POST)
+    public String withdraw() {
+        return "Withdraw";
+    }
+
+    @RequestMapping(value = "/welcome")
+    public String backToWelcomePage() {
+        return "Welcome";
+    }
+
     @ExceptionHandler(Exception.class)
     public String handleException() {
         return "exception";

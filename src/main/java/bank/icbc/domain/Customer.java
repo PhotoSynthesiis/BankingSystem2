@@ -8,6 +8,7 @@ import java.sql.Date;
 public class Customer {
     private String nickname;
     private Date dateOfBirth;
+    private double balance;
 
     public void setNickname(String nickname) throws NicknameInvalidException {
 
@@ -28,5 +29,13 @@ public class Customer {
 
     public Date getDateOfBirth() {
         return dateOfBirth;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public double getBalance() {
+        return balance;
     }
 }

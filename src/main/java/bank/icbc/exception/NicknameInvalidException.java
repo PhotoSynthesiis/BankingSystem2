@@ -1,7 +1,7 @@
 package bank.icbc.exception;
 
 public class NicknameInvalidException extends Exception{
-    public NicknameInvalidException(String message) {
-        super(message);
+    public NicknameInvalidException(String msg) {
+        super(msg);
     }
 }

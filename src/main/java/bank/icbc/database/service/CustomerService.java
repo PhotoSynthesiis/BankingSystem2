@@ -16,12 +16,19 @@ public class CustomerService {
     @Qualifier("customerDAO")
     private CustomerDAO customerDAO;
 
+    private final String defaultTableNameForCustomer = "customer";
+    private String tableName = defaultTableNameForCustomer;
+
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
+    }
+
     @Transactional
     public void addCustomer(Customer customer) throws DuplicateCustomerException {
-        customerDAO.addCustomer(customer);
+        customerDAO.addCustomer(customer, tableName);
     }
 
     public Customer getCustomers(String nickname) throws CustomerNotFoundException {
-        return customerDAO.getCustomer(nickname);
+        return customerDAO.getCustomer(nickname, tableName);
     }
 }

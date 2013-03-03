@@ -6,7 +6,7 @@
 </head>
 <body>
 nickname is invalid</br>
-<c:url value="/abc" var="abc"/>
-<%--<a href="${abc}">back</a>--%>
+<c:url value="/welcome" var="welcome"/>
+<a href="${welcome}">back</a>
 </body>
 </html>
