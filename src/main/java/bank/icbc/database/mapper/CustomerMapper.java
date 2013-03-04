@@ -17,6 +17,7 @@ public class CustomerMapper implements RowMapper<Customer> {
             e.printStackTrace();
         }
         customer.setDateOfBirth(rs.getDate(2));
+        customer.setBalance(rs.getDouble(3));
         return customer;
     }
 }

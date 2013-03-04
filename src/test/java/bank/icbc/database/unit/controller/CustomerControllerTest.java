@@ -2,6 +2,7 @@ package bank.icbc.database.unit.controller;
 
 import bank.icbc.database.service.CustomerService;
 import bank.icbc.database.template.CustomerDAO;
+import bank.icbc.domain.Customer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -18,6 +19,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
+
+import java.sql.Date;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -116,5 +119,36 @@ public class CustomerControllerTest {
         ModelAndView modelAndView = handlerAdapter.handle(request, response, controller);
 
         assertThat("Withdraw", is(modelAndView.getViewName()));
+    }
+
+    @Test
+    public void shouldReturnDepositAsView() throws Exception {
+        request.setRequestURI("/deposit");
+        request.setMethod(HttpMethod.GET.toString());
+        Object controller = mappingHandler.getHandler(request).getHandler();
+
+        ModelAndView modelAndView = handlerAdapter.handle(request, response, controller);
+
+        assertThat("Deposit", is(modelAndView.getViewName()));
+    }
+
+    @Test
+    public void shouldReturnShowBalanceAsView() throws Exception {
+        Customer customer = new Customer();
+        customer.setNickname("dan");
+        customer.setDateOfBirth(new Date(Date.valueOf("1990-09-08").getTime()));
+        customer.setBalance(12.00);
+
+        service.addCustomer(customer);
+
+        request.setParameter("nickname", "dan");
+        request.setParameter("balance", "12.00");
+
+        request.setRequestURI("/deposit");
+        request.setMethod(HttpMethod.POST.toString());
+        Object controller = mappingHandler.getHandler(request).getHandler();
+
+        ModelAndView modelAndView = handlerAdapter.handle(request, response, controller);
+        assertThat("ShowBalance", is(modelAndView.getViewName()));
     }
 }

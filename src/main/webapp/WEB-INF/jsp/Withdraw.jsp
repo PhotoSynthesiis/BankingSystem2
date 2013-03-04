@@ -12,20 +12,22 @@
     <title>Withdraw Balance</title>
 </head>
 <body>
-<form:form method="POST" action="/BankingSystem2/withdraw" modelAttribute="withdraw">
+<form:form method="POST" action="/BankingSystem2/withdraw" modelAttribute="customer">
     <table>
         <tr>
-            <td><form:label path="nickname">Nickname</form:label></td>
-            <td><form:input path="nickname"/></td>
+            <td>Nickname:</td>
+            <td><form:input path="nickname" /></td>
         </tr>
         <tr>
-            <td><form:label path="balanceToWithdraw">Balance you want to withdraw</form:label></td>
-            <td><form:input path="balanceToWithdraw"/></td>
+            <td>Balance you want to withdraw</td>
+            <td><form:input path="balance" /></td>
         </tr>
         <tr>
             <td><input type="submit" value="Submit"/></td>
         </tr>
     </table>
 </form:form>
+
+
 </body>
 </html>

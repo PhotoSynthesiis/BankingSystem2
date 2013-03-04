@@ -64,7 +64,7 @@ public class CustomerDAO {
         jdbcTemplate.update(SQL, new Object[]{balanceAfter, nickname});
     }
 
-    public void addBalance(String nickname, double balanceToDeposit, String tableName) {
+    public void deposit(String nickname, double balanceToDeposit, String tableName) {
         double balanceBefore = getBalance(nickname, tableName);
         double balanceAfter = balanceBefore + balanceToDeposit;
 

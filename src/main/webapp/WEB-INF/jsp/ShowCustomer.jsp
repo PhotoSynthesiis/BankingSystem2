@@ -6,8 +6,9 @@
     <title>Show Customers</title>
 </head>
 <body>
-customer name : ${customer.nickname} <br/>
-customer dateOfBirth : ${customer.dateOfBirth} </br>
+customer name : ${customer.nickname} <br>
+customer dateOfBirth : ${customer.dateOfBirth} <br>
+balance : ${customer.balance}<br>
 
 <c:url value="/welcome" var="welcome"/>
 1. <a href="${welcome}">back</a>

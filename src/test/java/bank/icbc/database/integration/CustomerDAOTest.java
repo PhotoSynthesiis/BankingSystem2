@@ -1,13 +1,11 @@
 package bank.icbc.database.integration;
 
-import bank.icbc.database.service.CustomerService;
 import bank.icbc.database.template.CustomerDAO;
 import bank.icbc.domain.Customer;
 import bank.icbc.exception.BalanceOverdrawException;
 import bank.icbc.exception.CustomerNotFoundException;
 import bank.icbc.exception.DuplicateCustomerException;
 import bank.icbc.exception.NicknameInvalidException;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -39,11 +37,6 @@ public class CustomerDAOTest {
     public void setUp() {
         customerDAO.createTable(testTable);
     }
-
-//    @After
-//    public void tearDown() {
-//        customerDAO.deleteTable(testTable);
-//    }
 
     @Test
     public void shouldAddCustomerSuccessfully() throws NicknameInvalidException, CustomerNotFoundException, DuplicateCustomerException {
@@ -133,7 +126,7 @@ public class CustomerDAOTest {
         customerDAO.addCustomer(customerToBeSet, testTable);
 
         double balanceToDeposit = 23.00;
-        customerDAO.addBalance(customerToBeSet.getNickname(), balanceToDeposit, testTable);
+        customerDAO.deposit(customerToBeSet.getNickname(), balanceToDeposit, testTable);
 
         double expectedBalance = 123.00;
         assertThat(customerDAO.getBalance(customerToBeSet.getNickname(), testTable), is(expectedBalance));

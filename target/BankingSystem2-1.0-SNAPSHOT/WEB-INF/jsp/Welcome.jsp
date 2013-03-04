@@ -11,5 +11,8 @@ Welcome to the Banking System! <br/>
 
 <c:url value="/withdraw" var="withdraw"/>
 2. <a href="${withdraw}">withdraw</a>
+
+<c:url value="/deposit" var="deposit"/>
+2. <a href="${deposit}">deposit</a>
 </body>
 </html>

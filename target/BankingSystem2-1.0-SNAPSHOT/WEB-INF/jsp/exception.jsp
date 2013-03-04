@@ -5,7 +5,7 @@
     <title>Nickname Invalid Page</title>
 </head>
 <body>
-nickname is invalid</br>
+Oops, We got a problem!<br>
 <c:url value="/welcome" var="welcome"/>
 <a href="${welcome}">back</a>
 </body>
