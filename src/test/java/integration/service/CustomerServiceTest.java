@@ -24,7 +24,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:applicationContextDataSource-test.xml")
+@ContextConfiguration(locations = {"classpath:applicationContextDataSource-test.xml", "classpath:applicationContext-servlet.xml"})
 public class CustomerServiceTest {
     @Rule
     public ExpectedException expectedException = ExpectedException.none();

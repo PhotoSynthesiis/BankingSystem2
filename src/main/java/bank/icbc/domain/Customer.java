@@ -9,6 +9,7 @@ public class Customer {
     private String nickname;
     private Date dateOfBirth;
     private double balance;
+    private String email;
 
     public void setNickname(String nickname) throws NicknameInvalidException {
 
@@ -37,5 +38,9 @@ public class Customer {
 
     public double getBalance() {
         return balance;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

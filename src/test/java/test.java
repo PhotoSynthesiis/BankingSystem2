@@ -18,7 +18,7 @@ public class test
         senderImpl.setHost("smtp.gmail.com");
         senderImpl.setPort(587);
 
-        // 建立邮件消息  
+        // 建立邮件消息
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         // 设置收件人，寄件人 用数组发送多个邮件  
         // String[] array = new String[] {"sun111@163.com","sun222@sohu.com"};  

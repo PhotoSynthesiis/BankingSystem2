@@ -26,8 +26,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:applicationContextDataSource-test.xml",
-        "classpath:applicationContext-servlet.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext-servlet.xml",
+        "classpath:applicationContextDataSource-test.xml"})
 public class CustomerControllerTest {
 
     private MockHttpServletRequest request;
@@ -87,22 +87,6 @@ public class CustomerControllerTest {
 
         assertThat("ShowCustomer", is(modelAndView.getViewName()));
     }
-
-//    @Test
-//    public void shouldReturnExceptionAsView() throws Exception {
-//        request.setParameter("nickname", "dan");
-//        request.setParameter("dateOfBirth", "1980-09-01");
-//
-//        request.setRequestURI("/addCustomer");
-//        request.setMethod(HttpMethod.POST.toString());
-//
-//        Object integration.controller = mappingHandler.getHandler(request).getHandler();
-//
-//        handlerAdapter.handle(request, response, integration.controller);
-//        ModelAndView modelAndView = handlerAdapter.handle(request, response, integration.controller);
-//
-//        assertThat("exception", is(modelAndView.getViewName()));
-//    }
 
     @Test
     public void shouldReturnWelcomeAsView() throws Exception {
