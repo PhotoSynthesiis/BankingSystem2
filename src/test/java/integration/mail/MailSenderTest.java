@@ -39,13 +39,14 @@ public class MailSenderTest {
     }
 
     @Test
-    public void shouldSendEmailToCustomerSuccessfully() throws MessagingException, IOException {
+    public void should_send_email_successfully() throws MessagingException, IOException {
 
         String customerNickname = "adam";
-        mailSender.sendEmail(customerNickname);
+        String customerEmail = "adam@test.com";
+        mailSender.sendEmail(customerNickname, customerEmail);
 
         WiserMessage wiserMessage = wiser.getMessages().get(0);
-        String expectedReceiver = "adam@thebank.com";
+        String expectedReceiver = "adam@test.com";
         String expectedSender = "admin@thebank.com";
         String expectedSubject = "Welcome!";
         String expectedContent = "Dear adam, welcome to the bank";
@@ -53,6 +54,6 @@ public class MailSenderTest {
         assertThat(wiserMessage.getEnvelopeReceiver(), is(expectedReceiver));
         assertThat(wiserMessage.getEnvelopeSender(), is(expectedSender));
         assertThat(wiserMessage.getMimeMessage().getContent().toString().trim(), is(expectedContent));
-        assertThat(wiserMessage.getMimeMessage().getSubject().toString().trim(), is(expectedSubject));
+        assertThat(wiserMessage.getMimeMessage().getSubject().trim(), is(expectedSubject));
     }
 }

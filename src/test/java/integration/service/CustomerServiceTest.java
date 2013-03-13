@@ -49,7 +49,7 @@ public class CustomerServiceTest {
     }
 
     @Test
-    public void shouldAddCustomerSuccessfully() throws NicknameInvalidException, CustomerNotFoundException, DuplicateCustomerException {
+    public void should_add_customer_successfully() throws NicknameInvalidException, CustomerNotFoundException, DuplicateCustomerException {
         Customer customerToBeSet = new Customer();
         customerToBeSet.setNickname("adam");
         customerToBeSet.setDateOfBirth(new Date(Date.valueOf("1983-10-25").getTime()));
@@ -62,7 +62,7 @@ public class CustomerServiceTest {
     }
 
     @Test
-    public void shouldWithdrawMoneySuccessfully() throws NicknameInvalidException, DuplicateCustomerException, BalanceOverdrawException {
+    public void should_withdraw_successfully() throws NicknameInvalidException, DuplicateCustomerException, BalanceOverdrawException {
         Customer customerToBeSet = new Customer();
         customerToBeSet.setNickname("adam");
         customerToBeSet.setDateOfBirth(new Date(Date.valueOf("1983-10-25").getTime()));
@@ -79,7 +79,7 @@ public class CustomerServiceTest {
     }
 
     @Test
-    public void shouldThrowExceptionWhenAddTwoCustomersWithSameNickname() throws NicknameInvalidException, DuplicateCustomerException {
+    public void should_throw_exception_when_add_customer_with_same_nickname() throws NicknameInvalidException, DuplicateCustomerException {
         expectedException.expect(DuplicateCustomerException.class);
 
         Customer customer1 = new Customer();
@@ -97,7 +97,7 @@ public class CustomerServiceTest {
     }
 
     @Test
-    public void shouldWithdrawAllMoneyInAccountSuccessfully() throws NicknameInvalidException, DuplicateCustomerException, BalanceOverdrawException {
+    public void should_withdraw_all_money_in_account_successfully() throws NicknameInvalidException, DuplicateCustomerException, BalanceOverdrawException {
         Customer customerToBeSet = new Customer();
         customerToBeSet.setNickname("adam");
         customerToBeSet.setDateOfBirth(new Date(Date.valueOf("1983-10-25").getTime()));
@@ -115,7 +115,7 @@ public class CustomerServiceTest {
     }
 
     @Test
-    public void shouldThrowExceptionWhenTryOverWithdraw() throws NicknameInvalidException, DuplicateCustomerException, BalanceOverdrawException {
+    public void should_throw_exception_when_overdraw() throws NicknameInvalidException, DuplicateCustomerException, BalanceOverdrawException {
         expectedException.expect(BalanceOverdrawException.class);
 
         Customer customerToBeSet = new Customer();
@@ -129,7 +129,7 @@ public class CustomerServiceTest {
     }
 
     @Test
-    public void shouldDepositNewBalanceSuccessfully() throws DuplicateCustomerException, NicknameInvalidException {
+    public void should_deposit_new_balance_successfully() throws DuplicateCustomerException, NicknameInvalidException {
         Customer customerToBeSet = new Customer();
         customerToBeSet.setNickname("adam");
         customerToBeSet.setDateOfBirth(new Date(Date.valueOf("1983-10-25").getTime()));

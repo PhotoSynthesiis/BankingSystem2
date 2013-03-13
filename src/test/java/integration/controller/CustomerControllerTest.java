@@ -63,7 +63,7 @@ public class CustomerControllerTest {
     }
 
     @Test
-    public void shouldReturnAddCustomerAsView() throws Exception {
+    public void should_return_add_customer() throws Exception {
         request.setRequestURI("/addCustomer");
         request.setMethod(HttpMethod.GET.toString());
         Object controller = mappingHandler.getHandler(request).getHandler();
@@ -74,7 +74,7 @@ public class CustomerControllerTest {
     }
 
     @Test
-    public void shouldReturnShowCustomerAsView() throws Exception {
+    public void should_return_show_customer() throws Exception {
         request.setParameter("nickname", "dan");
         request.setParameter("dateOfBirth", "1980-09-01");
 
@@ -89,7 +89,7 @@ public class CustomerControllerTest {
     }
 
     @Test
-    public void shouldReturnWelcomeAsView() throws Exception {
+    public void should_return_welcome() throws Exception {
         request.setRequestURI("/welcome");
         request.setMethod(HttpMethod.GET.toString());
         Object controller = mappingHandler.getHandler(request).getHandler();
@@ -100,7 +100,7 @@ public class CustomerControllerTest {
     }
 
     @Test
-    public void shouldReturnWithdrawAsView() throws Exception {
+    public void should_return_withdraw() throws Exception {
         request.setRequestURI("/withdraw");
         request.setMethod(HttpMethod.GET.toString());
         Object controller = mappingHandler.getHandler(request).getHandler();
@@ -111,7 +111,7 @@ public class CustomerControllerTest {
     }
 
     @Test
-    public void shouldReturnDepositAsView() throws Exception {
+    public void should_return_deposit() throws Exception {
         request.setRequestURI("/deposit");
         request.setMethod(HttpMethod.GET.toString());
         Object controller = mappingHandler.getHandler(request).getHandler();
@@ -122,7 +122,7 @@ public class CustomerControllerTest {
     }
 
     @Test
-    public void shouldReturnShowBalanceAsView() throws Exception {
+    public void should_return_show_balance() throws Exception {
         Customer customer = new Customer();
         customer.setNickname("dan");
         customer.setDateOfBirth(new Date(Date.valueOf("1990-09-08").getTime()));

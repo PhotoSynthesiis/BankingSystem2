@@ -14,7 +14,7 @@ public class CustomerTest {
     public ExpectedException expectedException = ExpectedException.none();
 
     @Test
-    public void shouldThrowExceptionWhenAddCustomerWithoutNickname() throws NicknameInvalidException {
+    public void should_throw_exception_when_add_customer_without_nickname() throws NicknameInvalidException {
         expectedException.expect(NicknameInvalidException.class);
 
         String nickName = "";
@@ -24,7 +24,7 @@ public class CustomerTest {
     }
 
     @Test
-    public void shouldThrowExceptionWhenAddCustomerWithNicknameContainsOnlySpaces() throws NicknameInvalidException {
+    public void should_throw_exception_when_nickname_contains_only_space() throws NicknameInvalidException {
         expectedException.expect(NicknameInvalidException.class);
 
         String nickName = "       ";
@@ -34,7 +34,7 @@ public class CustomerTest {
     }
 
     @Test
-    public void shouldThrowExceptionWhenAddCustomerWithInvalidNickname() throws NicknameInvalidException {
+    public void should_throw_exception_when_nickname_contains_upper_case() throws NicknameInvalidException {
         expectedException.expect(NicknameInvalidException.class);
 
         String nickName = "A2s";
@@ -44,7 +44,7 @@ public class CustomerTest {
     }
 
     @Test
-    public void shouldAddCustomerNameSuccessfully() throws NicknameInvalidException {
+    public void should_add_customer_successfully() throws NicknameInvalidException {
         String nickname = "bradpit";
 
         Customer customer = new Customer();
@@ -53,4 +53,6 @@ public class CustomerTest {
         String expectedNickname = nickname;
         assertThat(expectedNickname, is(customer.getNickname()));
     }
+
+
 }

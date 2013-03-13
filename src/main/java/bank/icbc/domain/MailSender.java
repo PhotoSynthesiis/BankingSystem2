@@ -8,10 +8,10 @@ public class MailSender {
     @Autowired
     private JavaMailSenderImpl javaMailSenderImpl;
 
-    public void sendEmail(String nickname) {
+    public void sendEmail(String nickname, String emailAddress) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
 
-        mailMessage.setTo(nickname + "@thebank.com");
+        mailMessage.setTo(emailAddress);
         mailMessage.setFrom("admin@thebank.com");
         mailMessage.setSubject("Welcome!");
         mailMessage.setText("Dear " + nickname + ", welcome to the bank");
