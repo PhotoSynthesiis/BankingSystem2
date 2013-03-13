@@ -2,6 +2,7 @@ package bank.icbc.validator;
 
 import org.springframework.util.StringUtils;
 
+import java.sql.Date;
 import java.util.regex.Pattern;
 
 public class CustomerValidator {
@@ -18,9 +19,11 @@ public class CustomerValidator {
     }
 
     private static boolean isLowerLetterOrDigit(String nickname) {
-        boolean containInvalidCharacters;
         Pattern pattern = Pattern.compile("[\\da-z]+");
-        containInvalidCharacters = pattern.matcher(nickname).matches();
-        return containInvalidCharacters;
+        return pattern.matcher(nickname).matches();
+    }
+
+    public static boolean isDateOfBirthValid(Date dateOfBirth) {
+        return dateOfBirth != null;
     }
 }

@@ -1,25 +1,31 @@
 package unit.domain;
 
 import bank.icbc.domain.Customer;
+import bank.icbc.exception.DateOfBirthInvalidException;
 import bank.icbc.exception.NicknameInvalidException;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import java.sql.Date;
 
 public class CustomerTest {
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
+
+    private Customer customer;
+
+    @Before
+    public void setUp() throws NicknameInvalidException, DateOfBirthInvalidException {
+        customer = new Customer("dan", new Date(Date.valueOf("1982-10-12").getTime()), 100.00);
+    }
 
     @Test
     public void should_throw_exception_when_add_customer_without_nickname() throws NicknameInvalidException {
         expectedException.expect(NicknameInvalidException.class);
 
         String nickName = "";
-
-        Customer customer = new Customer();
         customer.setNickname(nickName);
     }
 
@@ -28,31 +34,38 @@ public class CustomerTest {
         expectedException.expect(NicknameInvalidException.class);
 
         String nickName = "       ";
+        customer.setNickname(nickName);
+    }
 
-        Customer customer = new Customer();
+    @Test
+    public void should_throw_exception_when_nickname_contains_special_characters() throws NicknameInvalidException {
+        expectedException.expect(NicknameInvalidException.class);
+        String nickName = "^&*";
         customer.setNickname(nickName);
     }
 
     @Test
     public void should_throw_exception_when_nickname_contains_upper_case() throws NicknameInvalidException {
         expectedException.expect(NicknameInvalidException.class);
-
         String nickName = "A2s";
-
-        Customer customer = new Customer();
         customer.setNickname(nickName);
     }
 
     @Test
-    public void should_add_customer_successfully() throws NicknameInvalidException {
+    public void should_set_nickname_successfully() throws NicknameInvalidException {
         String nickname = "bradpit";
-
-        Customer customer = new Customer();
         customer.setNickname(nickname);
-
-        String expectedNickname = nickname;
-        assertThat(expectedNickname, is(customer.getNickname()));
     }
 
+    @Test
+    public void should_throw_exception_when_dateOfBirth_is_null() throws NicknameInvalidException, DateOfBirthInvalidException {
+        expectedException.expect(DateOfBirthInvalidException.class);
+        Date dateOfBirth = null;
+        customer.setDateOfBirth(dateOfBirth);
+    }
 
+    @Test
+    public void should_set_dateOfBirth_successfully() throws DateOfBirthInvalidException {
+        customer.setDateOfBirth(new Date(Date.valueOf("1988-10-02").getTime()));
+    }
 }

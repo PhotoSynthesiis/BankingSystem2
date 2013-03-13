@@ -1,6 +1,7 @@
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
+import java.sql.Date;
 import java.util.Properties;
 
 /**
@@ -13,16 +14,21 @@ public class test
 {
     public static void main(String args[])
     {
+        Date date = new Date(Date.valueOf("").getTime());
+        System.out.println(date.getTime());
+    }
+
+    private static void sendEmail() {
         JavaMailSenderImpl senderImpl = new JavaMailSenderImpl();
-        // 设定mail server  
+        // 设定mail server
         senderImpl.setHost("smtp.gmail.com");
         senderImpl.setPort(587);
 
         // 建立邮件消息
         SimpleMailMessage mailMessage = new SimpleMailMessage();
-        // 设置收件人，寄件人 用数组发送多个邮件  
-        // String[] array = new String[] {"sun111@163.com","sun222@sohu.com"};  
-        // mailMessage.setTo(array);  
+        // 设置收件人，寄件人 用数组发送多个邮件
+        // String[] array = new String[] {"sun111@163.com","sun222@sohu.com"};
+        // mailMessage.setTo(array);
         mailMessage.setTo("photosynthesiis@gmail.com");
         mailMessage.setFrom("test@163.com");
         mailMessage.setSubject(" 测试简单文本邮件发送！ ");

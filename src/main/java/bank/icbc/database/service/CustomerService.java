@@ -25,7 +25,7 @@ public class CustomerService {
     public void addCustomer(Customer customer) throws DuplicateCustomerException {
         try {
             customerDao.addCustomer(customer);
-            sendEmailToCustomer(customer);
+//            sendEmailToCustomer(customer);
         } catch (DuplicateKeyException exception) {
             throw new DuplicateCustomerException("Customer with nickname " + customer.getNickname() + " has already existed");
         }

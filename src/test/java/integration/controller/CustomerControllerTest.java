@@ -3,6 +3,8 @@ package integration.controller;
 import bank.icbc.database.dao.CustomerDao;
 import bank.icbc.database.service.CustomerService;
 import bank.icbc.domain.Customer;
+import bank.icbc.exception.DateOfBirthInvalidException;
+import bank.icbc.exception.NicknameInvalidException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -51,11 +53,12 @@ public class CustomerControllerTest {
     private String testTable = "customer";
 
     @Before
-    public void setUp() {
+    public void setUp() throws NicknameInvalidException, DateOfBirthInvalidException {
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
         customerDao.createTable(testTable);
     }
+
 
     @After
     public void tearDown() {
@@ -123,12 +126,8 @@ public class CustomerControllerTest {
 
     @Test
     public void should_return_show_balance() throws Exception {
-        Customer customer = new Customer();
-        customer.setNickname("dan");
-        customer.setDateOfBirth(new Date(Date.valueOf("1990-09-08").getTime()));
-        customer.setBalance(12.00);
 
-        service.addCustomer(customer);
+        service.addCustomer(new Customer("dan", new Date(Date.valueOf("1982-10-12").getTime()), 100.00));
 
         request.setParameter("nickname", "dan");
         request.setParameter("balance", "12.00");
