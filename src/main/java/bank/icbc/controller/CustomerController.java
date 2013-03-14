@@ -1,6 +1,6 @@
 package bank.icbc.controller;
 
-import bank.icbc.database.service.CustomerService;
+import bank.icbc.domain.Bank;
 import bank.icbc.domain.Customer;
 import bank.icbc.exception.BalanceOverdrawException;
 import bank.icbc.exception.CustomerNotFoundException;
@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 public class CustomerController {
 
     @Autowired
-    CustomerService service;
+    Bank bank;
 
     @RequestMapping(value = "/addCustomer", method = RequestMethod.GET)
     public String addCustomer(@ModelAttribute Customer customer) {
@@ -29,11 +29,12 @@ public class CustomerController {
     @RequestMapping(value = "/addCustomer", method = RequestMethod.POST)
     public String saveCustomer(@ModelAttribute Customer customer, ModelMap modelMap) throws CustomerNotFoundException, DuplicateCustomerException {
 
-        service.addCustomer(customer);
+        bank.addCustomer(customer);
 
-        Customer theCustomer = service.getCustomer(customer.getNickname());
+        Customer theCustomer = bank.getCustomer(customer.getNickname());
         modelMap.addAttribute("nickname", theCustomer.getNickname());
         modelMap.addAttribute("dateOfBirth", theCustomer.getDateOfBirth());
+        modelMap.addAttribute("balance", theCustomer.getBalance());
 
         return "ShowCustomer";
     }
@@ -49,10 +50,10 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "/deposit", method = RequestMethod.POST)
-    public String deposit(@ModelAttribute Customer customer, ModelMap modelMap) throws CustomerNotFoundException {
-        service.deposit(customer.getNickname(), customer.getBalance());
+    public String deposit(@ModelAttribute Customer customer, ModelMap modelMap) throws CustomerNotFoundException, BalanceOverdrawException {
+        bank.deposit(customer.getNickname(), customer.getBalance());
 
-        Customer theCustomer = service.getCustomer(customer.getNickname());
+        Customer theCustomer = bank.getCustomer(customer.getNickname());
         modelMap.addAttribute("nickname", theCustomer.getNickname());
         modelMap.addAttribute("balance", theCustomer.getBalance());
 
@@ -61,9 +62,9 @@ public class CustomerController {
 
     @RequestMapping(value = "/withdraw", method = RequestMethod.POST)
     public String withdraw(@ModelAttribute Customer customer, ModelMap modelMap) throws BalanceOverdrawException, CustomerNotFoundException {
-        service.withdraw(customer.getNickname(), customer.getBalance());
+        bank.withdraw(customer.getNickname(), customer.getBalance());
 
-        Customer theCustomer = service.getCustomer(customer.getNickname());
+        Customer theCustomer = bank.getCustomer(customer.getNickname());
 
         modelMap.addAttribute("nickname", theCustomer.getNickname());
         modelMap.addAttribute("balance", theCustomer.getBalance());

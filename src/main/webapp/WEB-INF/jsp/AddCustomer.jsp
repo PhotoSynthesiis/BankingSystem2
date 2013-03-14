@@ -16,6 +16,10 @@
             <td><form:input path="dateOfBirth"/></td>
         </tr>
         <tr>
+            <td><form:label path="balance">balance</form:label></td>
+            <td><form:input path="balance"/></td>
+        </tr>
+        <tr>
             <td><input type="submit" value="Submit"/></td>
         </tr>
     </table>

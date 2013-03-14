@@ -65,10 +65,10 @@
     <property name="sun.cpu.isalist" value=""/>
   </properties>
   <testcase time="0" classname="unit.domain.CustomerTest" name="should_throw_exception_when_nickname_contains_only_space"/>
-  <testcase time="0.001" classname="unit.domain.CustomerTest" name="should_throw_exception_when_nickname_contains_special_characters"/>
-  <testcase time="0" classname="unit.domain.CustomerTest" name="should_set_nickname_successfully"/>
-  <testcase time="0.001" classname="unit.domain.CustomerTest" name="should_set_dateOfBirth_successfully"/>
+  <testcase time="0" classname="unit.domain.CustomerTest" name="should_throw_exception_when_nickname_contains_special_characters"/>
+  <testcase time="0.001" classname="unit.domain.CustomerTest" name="should_set_nickname_successfully"/>
+  <testcase time="0" classname="unit.domain.CustomerTest" name="should_set_dateOfBirth_successfully"/>
   <testcase time="0" classname="unit.domain.CustomerTest" name="should_throw_exception_when_nickname_contains_upper_case"/>
-  <testcase time="0.001" classname="unit.domain.CustomerTest" name="should_throw_exception_when_add_customer_without_nickname"/>
+  <testcase time="0" classname="unit.domain.CustomerTest" name="should_throw_exception_when_add_customer_without_nickname"/>
   <testcase time="0" classname="unit.domain.CustomerTest" name="should_throw_exception_when_dateOfBirth_is_null"/>
 </testsuite>

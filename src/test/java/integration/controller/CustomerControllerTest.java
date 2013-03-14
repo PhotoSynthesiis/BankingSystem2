@@ -1,7 +1,7 @@
 package integration.controller;
 
 import bank.icbc.database.dao.CustomerDao;
-import bank.icbc.database.service.CustomerService;
+import bank.icbc.domain.Bank;
 import bank.icbc.domain.Customer;
 import bank.icbc.exception.DateOfBirthInvalidException;
 import bank.icbc.exception.NicknameInvalidException;
@@ -42,7 +42,7 @@ public class CustomerControllerTest {
     private RequestMappingHandlerAdapter handlerAdapter;
 
     @Autowired
-    private CustomerService service;
+    private Bank service;
 
     @Autowired
     @Qualifier("customerDao")
