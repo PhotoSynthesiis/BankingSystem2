@@ -3,15 +3,16 @@ package integration.domain;
 import bank.icbc.domain.Bank;
 import bank.icbc.domain.Customer;
 import bank.icbc.exception.*;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 
@@ -28,16 +29,20 @@ public class BankTest {
     @Qualifier("bank")
     private Bank bank;
 
-    private static Customer customer;
+    private Customer customer;
 
-    @BeforeClass
-    public static void beforeClass() throws NicknameInvalidException, DateOfBirthInvalidException {
+    @Before
+    public void setUp() throws NicknameInvalidException, DateOfBirthInvalidException {
+//        customerDao.createTable(testTable);
         customer = new Customer("dan", new Date(Date.valueOf("1982-10-12").getTime()), 100.00);
     }
 
+    @After
+    public void tearDown() {
+//        customerDao.deleteTable(testTable);
+    }
+
     @Test
-    @Transactional
-    @Rollback(true)
     public void should_add_customer_successfully() throws NicknameInvalidException, CustomerNotFoundException, DuplicateCustomerException, DateOfBirthInvalidException {
         bank.addCustomer(customer);
 
@@ -46,8 +51,6 @@ public class BankTest {
     }
 
     @Test
-    @Transactional
-    @Rollback(true)
     public void should_withdraw_successfully() throws NicknameInvalidException, DuplicateCustomerException, BalanceOverdrawException, DateOfBirthInvalidException {
         bank.addCustomer(customer);
 
@@ -60,8 +63,6 @@ public class BankTest {
     }
 
     @Test
-    @Transactional
-    @Rollback(true)
     public void should_throw_exception_when_add_customer_with_same_nickname() throws NicknameInvalidException, DuplicateCustomerException, DateOfBirthInvalidException {
         expectedException.expect(DuplicateCustomerException.class);
 
@@ -70,8 +71,6 @@ public class BankTest {
     }
 
     @Test
-    @Transactional
-    @Rollback(true)
     public void should_withdraw_all_money_in_account_successfully() throws NicknameInvalidException, DuplicateCustomerException, BalanceOverdrawException, DateOfBirthInvalidException {
         bank.addCustomer(customer);
 
@@ -85,8 +84,6 @@ public class BankTest {
     }
 
     @Test
-    @Transactional
-    @Rollback(true)
     public void should_throw_exception_when_overdraw() throws NicknameInvalidException, DuplicateCustomerException, BalanceOverdrawException, DateOfBirthInvalidException {
         expectedException.expect(BalanceOverdrawException.class);
 
@@ -96,8 +93,6 @@ public class BankTest {
     }
 
     @Test
-    @Transactional
-    @Rollback(true)
     public void should_deposit_new_balance_successfully() throws DuplicateCustomerException, NicknameInvalidException, DateOfBirthInvalidException, BalanceOverdrawException {
         bank.addCustomer(customer);
 
