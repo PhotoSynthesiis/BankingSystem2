@@ -32,5 +32,6 @@
         </property>
     </bean>
 
-    <bean id="mailSender" class="bank.icbc.domain.MailSender" />
+    <bean id="mailSender" class="bank.icbc.domain.MailSender"/>
+
 </beans>
