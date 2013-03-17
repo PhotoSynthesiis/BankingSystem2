@@ -6,6 +6,7 @@ import bank.icbc.exception.BalanceOverdrawException;
 import bank.icbc.exception.DateOfBirthInvalidException;
 import bank.icbc.exception.DuplicateCustomerException;
 import bank.icbc.exception.NicknameInvalidException;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -17,6 +18,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
+import org.subethamail.wiser.Wiser;
 
 import java.sql.Date;
 
@@ -24,7 +26,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:applicationContextDataSource-test.xml", "classpath:applicationContext-servlet.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContextDataSource-test.xml", "classpath:applicationContext-servlet-test.xml"})
 public class CustomerTest {
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
@@ -34,6 +36,7 @@ public class CustomerTest {
     private Bank bank;
 
     private Customer customerToBeSet;
+    private Wiser wiser;
 
     @Autowired
     @Qualifier("customer")
@@ -41,7 +44,16 @@ public class CustomerTest {
 
     @Before
     public void setUp() throws NicknameInvalidException, DateOfBirthInvalidException {
-        customerToBeSet = new Customer("dan", new Date(Date.valueOf("1982-10-12").getTime()), 100.00);
+        wiser = new Wiser();
+        wiser.setPort(25000);
+        wiser.start();
+
+        customerToBeSet = new Customer("dan", new Date(Date.valueOf("1982-10-12").getTime()), 100.00, "abc@test.com");
+    }
+
+    @After
+    public void tearDown() {
+        wiser.stop();
     }
 
     @Test

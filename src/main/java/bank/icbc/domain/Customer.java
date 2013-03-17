@@ -26,10 +26,11 @@ public class Customer {
         // default constructor to make the CustomerControllerTest pass
     }
 
-    public Customer(String nickname, Date dateOfBirth, double balance) throws NicknameInvalidException, DateOfBirthInvalidException {
+    public Customer(String nickname, Date dateOfBirth, double balance, String emailAddress) throws NicknameInvalidException, DateOfBirthInvalidException {
         setNickname(nickname);
         setDateOfBirth(dateOfBirth);
         setBalance(balance);
+        setEmailAddress(emailAddress);
     }
 
     public void setNickname(String nickname) throws NicknameInvalidException {
@@ -48,12 +49,8 @@ public class Customer {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public String getNickname() {
-        return nickname;
-    }
-
-    public Date getDateOfBirth() {
-        return dateOfBirth;
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 
     public void setBalance(double balance) {
@@ -66,6 +63,14 @@ public class Customer {
 
     public String getEmailAddress() {
         return emailAddress;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
     }
 
     private double calculateBalanceLeft(String nickname, double balance, boolean withdraw) throws BalanceOverdrawException {

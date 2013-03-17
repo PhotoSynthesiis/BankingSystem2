@@ -19,7 +19,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext-servlet-test.xml",
-        "classpath:applicationContextDataSource.xml"})
+        "classpath:applicationContextDataSource-test.xml"})
 public class MailSenderTest {
     private Wiser wiser;
 

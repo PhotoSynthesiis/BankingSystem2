@@ -25,7 +25,7 @@ public class Bank {
         } catch (DuplicateKeyException exception) {
             throw new DuplicateCustomerException("Customer with nickname " + customer.getNickname() + " has already existed");
         }
-//        sendEmailToCustomer(customer);
+        sendEmailToCustomer(customer);
     }
 
     private void sendEmailToCustomer(Customer customer) {

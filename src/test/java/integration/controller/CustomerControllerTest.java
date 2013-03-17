@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
+import org.subethamail.wiser.Wiser;
 
 import java.sql.Date;
 
@@ -34,6 +35,7 @@ public class CustomerControllerTest {
 
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;
+    private Wiser wiser;
 
     @Autowired
     private RequestMappingHandlerMapping mappingHandler;
@@ -49,8 +51,18 @@ public class CustomerControllerTest {
 
     @Before
     public void setUp() throws NicknameInvalidException, DateOfBirthInvalidException {
+
+        wiser = new Wiser();
+        wiser.setPort(25000);
+        wiser.start();
+
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
+    }
+
+    @After
+    public void tearDown() {
+        wiser.stop();
     }
 
     @Test
@@ -72,6 +84,7 @@ public class CustomerControllerTest {
     public void should_return_show_customer() throws Exception {
         request.setParameter("nickname", "dan");
         request.setParameter("dateOfBirth", "1980-09-01");
+        request.setParameter("emailAddress", "abc@test.com");
 
         request.setRequestURI("/addCustomer");
         request.setMethod(HttpMethod.POST.toString());
@@ -127,7 +140,7 @@ public class CustomerControllerTest {
     @Rollback(true)
     public void should_return_show_balance() throws Exception {
 
-        bank.addCustomer(new Customer("dan", new Date(Date.valueOf("1982-10-12").getTime()), 100.00));
+        bank.addCustomer(new Customer("dan", new Date(Date.valueOf("1982-10-12").getTime()), 100.00, "abc@test.com"));
 
         request.setParameter("nickname", "dan");
         request.setParameter("balance", "12.00");

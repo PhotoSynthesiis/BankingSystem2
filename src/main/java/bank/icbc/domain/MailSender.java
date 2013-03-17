@@ -17,6 +17,5 @@ public class MailSender {
         mailMessage.setText("Dear " + nickname + ", welcome to the bank");
 
         javaMailSenderImpl.send(mailMessage);
-
     }
 }

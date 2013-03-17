@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="0.028" errors="0" skipped="0" tests="11" name="unit.domain.CustomerTest">
+<testsuite failures="0" time="0.055" errors="0" skipped="0" tests="11" name="unit.domain.CustomerTest">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Libraries"/>
@@ -64,15 +64,15 @@
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase time="0.008" classname="unit.domain.CustomerTest" name="should_throw_exception_when_overdraw"/>
-  <testcase time="0.004" classname="unit.domain.CustomerTest" name="should_deposit_new_balance_successfully"/>
+  <testcase time="0.016" classname="unit.domain.CustomerTest" name="should_throw_exception_when_overdraw"/>
+  <testcase time="0.01" classname="unit.domain.CustomerTest" name="should_deposit_new_balance_successfully"/>
   <testcase time="0.001" classname="unit.domain.CustomerTest" name="should_throw_exception_when_nickname_contains_only_space"/>
   <testcase time="0.001" classname="unit.domain.CustomerTest" name="should_throw_exception_when_nickname_contains_special_characters"/>
-  <testcase time="0" classname="unit.domain.CustomerTest" name="should_set_nickname_successfully"/>
+  <testcase time="0.001" classname="unit.domain.CustomerTest" name="should_set_nickname_successfully"/>
   <testcase time="0.001" classname="unit.domain.CustomerTest" name="should_set_dateOfBirth_successfully"/>
-  <testcase time="0.005" classname="unit.domain.CustomerTest" name="should_withdraw_all_money_in_account_successfully"/>
-  <testcase time="0.005" classname="unit.domain.CustomerTest" name="should_withdraw_successfully"/>
-  <testcase time="0" classname="unit.domain.CustomerTest" name="should_throw_exception_when_nickname_contains_upper_case"/>
-  <testcase time="0" classname="unit.domain.CustomerTest" name="should_throw_exception_when_add_customer_without_nickname"/>
-  <testcase time="0.001" classname="unit.domain.CustomerTest" name="should_throw_exception_when_dateOfBirth_is_null"/>
+  <testcase time="0.01" classname="unit.domain.CustomerTest" name="should_withdraw_all_money_in_account_successfully"/>
+  <testcase time="0.01" classname="unit.domain.CustomerTest" name="should_withdraw_successfully"/>
+  <testcase time="0.001" classname="unit.domain.CustomerTest" name="should_throw_exception_when_nickname_contains_upper_case"/>
+  <testcase time="0.001" classname="unit.domain.CustomerTest" name="should_throw_exception_when_add_customer_without_nickname"/>
+  <testcase time="0.002" classname="unit.domain.CustomerTest" name="should_throw_exception_when_dateOfBirth_is_null"/>
 </testsuite>
