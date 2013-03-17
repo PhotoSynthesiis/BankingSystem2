@@ -1,6 +1,9 @@
 package integration.domain;
 
 import bank.icbc.domain.MailSender;
+import bank.icbc.exception.DateOfBirthInvalidException;
+import bank.icbc.exception.DuplicateCustomerException;
+import bank.icbc.exception.NicknameInvalidException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +30,7 @@ public class MailSenderTest {
     private MailSender mailSender;
 
     @Before
-    public void setUp() {
+    public void setUp() throws NicknameInvalidException, DateOfBirthInvalidException {
         wiser = new Wiser();
         wiser.setPort(25000);
         wiser.start();
@@ -36,6 +39,18 @@ public class MailSenderTest {
     @After
     public void tearDown() {
         wiser.stop();
+    }
+
+    @Test
+    public void shouldFormCorrectEmailContent() throws DuplicateCustomerException, MessagingException, IOException {
+        String nickname = "nick";
+        String emailAddress = "nick@test.com";
+        mailSender.sendEmail(nickname, emailAddress);
+
+        WiserMessage wiserMessage = wiser.getMessages().get(0);
+        String expectedContent = "Dear nick, welcome to the bank";
+
+        assertThat(wiserMessage.getMimeMessage().getContent().toString().trim(), is(expectedContent));
     }
 
     @Test

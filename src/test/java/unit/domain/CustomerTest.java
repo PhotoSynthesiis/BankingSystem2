@@ -2,10 +2,7 @@ package unit.domain;
 
 import bank.icbc.domain.Bank;
 import bank.icbc.domain.Customer;
-import bank.icbc.exception.BalanceOverdrawException;
-import bank.icbc.exception.DateOfBirthInvalidException;
-import bank.icbc.exception.DuplicateCustomerException;
-import bank.icbc.exception.NicknameInvalidException;
+import bank.icbc.exception.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -43,7 +40,7 @@ public class CustomerTest {
     private Customer customer;
 
     @Before
-    public void setUp() throws NicknameInvalidException, DateOfBirthInvalidException {
+    public void setUp() throws NicknameInvalidException, DateOfBirthInvalidException, EmailAddressInvalidException {
         wiser = new Wiser();
         wiser.setPort(25000);
         wiser.start();
@@ -105,10 +102,49 @@ public class CustomerTest {
     }
 
     @Test
+    public void should_throw_exception_when_email_address_contains_special_character() throws EmailAddressInvalidException {
+        expectedException.expect(EmailAddressInvalidException.class);
+
+        String emailAddress = "%^&";
+        customerToBeSet.setEmailAddress(emailAddress);
+    }
+
+    @Test
+    public void should_throw_exception_when_email_address_contains_two_at_icons() throws EmailAddressInvalidException {
+        expectedException.expect(EmailAddressInvalidException.class);
+
+        String emailAddress = "a@b@c.com";
+        customerToBeSet.setEmailAddress(emailAddress);
+    }
+
+    @Test
+    public void should_throw_exception_when_email_address_is_empty() throws EmailAddressInvalidException {
+        expectedException.expect(EmailAddressInvalidException.class);
+
+        String emailAddress = "";
+        customerToBeSet.setEmailAddress(emailAddress);
+    }
+
+    @Test
+    public void should_throw_exception_when_email_address_contains_only_white_space() throws EmailAddressInvalidException {
+        expectedException.expect(EmailAddressInvalidException.class);
+
+        String emailAddress = "    ";
+        customerToBeSet.setEmailAddress(emailAddress);
+    }
+
+    @Test
+    public void should_set_email_address_successfully() throws EmailAddressInvalidException {
+        String emailAddress = "abc@test.com";
+        customerToBeSet.setEmailAddress(emailAddress);
+    }
+
+    @Test
     @Transactional
     @Rollback(true)
     public void should_deposit_new_balance_successfully() throws DuplicateCustomerException, NicknameInvalidException, DateOfBirthInvalidException, BalanceOverdrawException {
         bank.addCustomer(customerToBeSet);
+
         double balanceToDeposit = 23.00;
         customer.deposit(customerToBeSet.getNickname(), balanceToDeposit);
 

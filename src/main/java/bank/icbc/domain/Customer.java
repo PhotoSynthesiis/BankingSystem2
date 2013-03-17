@@ -3,6 +3,7 @@ package bank.icbc.domain;
 import bank.icbc.database.dao.CustomerDao;
 import bank.icbc.exception.BalanceOverdrawException;
 import bank.icbc.exception.DateOfBirthInvalidException;
+import bank.icbc.exception.EmailAddressInvalidException;
 import bank.icbc.exception.NicknameInvalidException;
 import bank.icbc.validator.CustomerValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class Customer {
         // default constructor to make the CustomerControllerTest pass
     }
 
-    public Customer(String nickname, Date dateOfBirth, double balance, String emailAddress) throws NicknameInvalidException, DateOfBirthInvalidException {
+    public Customer(String nickname, Date dateOfBirth, double balance, String emailAddress) throws NicknameInvalidException, DateOfBirthInvalidException, EmailAddressInvalidException {
         setNickname(nickname);
         setDateOfBirth(dateOfBirth);
         setBalance(balance);
@@ -49,7 +50,10 @@ public class Customer {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public void setEmailAddress(String emailAddress) {
+    public void setEmailAddress(String emailAddress) throws EmailAddressInvalidException {
+        if (!CustomerValidator.isEmailAddressValid(emailAddress)) {
+            throw new EmailAddressInvalidException("Format of email address is invalid");
+        }
         this.emailAddress = emailAddress;
     }
 

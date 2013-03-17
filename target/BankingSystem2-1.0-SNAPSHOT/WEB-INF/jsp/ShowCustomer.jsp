@@ -9,6 +9,7 @@
 customer name : ${customer.nickname} <br>
 customer dateOfBirth : ${customer.dateOfBirth} <br>
 balance : ${customer.balance}<br>
+emailAddress : ${customer.emailAddress}<br>
 
 <c:url value="/welcome" var="welcome"/>
 1. <a href="${welcome}">back</a>

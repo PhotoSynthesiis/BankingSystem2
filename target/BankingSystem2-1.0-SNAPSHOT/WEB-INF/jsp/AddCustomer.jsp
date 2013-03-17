@@ -20,6 +20,10 @@
             <td><form:input path="balance"/></td>
         </tr>
         <tr>
+            <td><form:label path="emailAddress">emailAddress</form:label></td>
+            <td><form:input path="emailAddress"/></td>
+        </tr>
+        <tr>
             <td><input type="submit" value="Submit"/></td>
         </tr>
     </table>

@@ -38,9 +38,11 @@ public class CustomerController {
         bank.addCustomer(customer);
 
         Customer theCustomer = bank.getCustomer(customer.getNickname());
+
         modelMap.addAttribute("nickname", theCustomer.getNickname());
         modelMap.addAttribute("dateOfBirth", theCustomer.getDateOfBirth());
         modelMap.addAttribute("balance", theCustomer.getBalance());
+        modelMap.addAttribute("emailAddress", theCustomer.getEmailAddress());
 
         return "ShowCustomer";
     }

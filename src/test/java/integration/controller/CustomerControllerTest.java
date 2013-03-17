@@ -3,6 +3,7 @@ package integration.controller;
 import bank.icbc.domain.Bank;
 import bank.icbc.domain.Customer;
 import bank.icbc.exception.DateOfBirthInvalidException;
+import bank.icbc.exception.EmailAddressInvalidException;
 import bank.icbc.exception.NicknameInvalidException;
 import org.junit.After;
 import org.junit.Before;
@@ -138,7 +139,7 @@ public class CustomerControllerTest {
     @Test
     @Transactional
     @Rollback(true)
-    public void should_return_show_balance() throws Exception {
+    public void should_return_show_balance() throws Exception, EmailAddressInvalidException {
 
         bank.addCustomer(new Customer("dan", new Date(Date.valueOf("1982-10-12").getTime()), 100.00, "abc@test.com"));
 
