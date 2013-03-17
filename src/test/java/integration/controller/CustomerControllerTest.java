@@ -1,6 +1,5 @@
 package integration.controller;
 
-import bank.icbc.database.dao.CustomerDao;
 import bank.icbc.domain.Bank;
 import bank.icbc.domain.Customer;
 import bank.icbc.exception.DateOfBirthInvalidException;
@@ -12,14 +11,13 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpMethod;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
@@ -46,31 +44,18 @@ public class CustomerControllerTest {
     @Autowired
     private Bank bank;
 
-    @Autowired
-    @Qualifier("customerDao")
-    private CustomerDao customerDao;
-
-    private EmbeddedDatabase embeddedDatabase;
-
     @Rule
     public ExpectedException exception = ExpectedException.none();
-    private String testTable = "customer";
 
     @Before
     public void setUp() throws NicknameInvalidException, DateOfBirthInvalidException {
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
-        embeddedDatabase = new EmbeddedDatabaseBuilder().addDefaultScripts().build();
-
-//        customerDao.createTable(testTable);
-    }
-
-    @After
-    public void tearDown() {
-//        customerDao.deleteTable(testTable);
     }
 
     @Test
+    @Transactional
+    @Rollback(true)
     public void should_return_add_customer() throws Exception {
         request.setRequestURI("/addCustomer");
         request.setMethod(HttpMethod.GET.toString());
@@ -82,6 +67,8 @@ public class CustomerControllerTest {
     }
 
     @Test
+    @Transactional
+    @Rollback(true)
     public void should_return_show_customer() throws Exception {
         request.setParameter("nickname", "dan");
         request.setParameter("dateOfBirth", "1980-09-01");
@@ -97,6 +84,8 @@ public class CustomerControllerTest {
     }
 
     @Test
+    @Transactional
+    @Rollback(true)
     public void should_return_welcome() throws Exception {
         request.setRequestURI("/welcome");
         request.setMethod(HttpMethod.GET.toString());
@@ -108,6 +97,8 @@ public class CustomerControllerTest {
     }
 
     @Test
+    @Transactional
+    @Rollback(true)
     public void should_return_withdraw() throws Exception {
         request.setRequestURI("/withdraw");
         request.setMethod(HttpMethod.GET.toString());
@@ -119,6 +110,8 @@ public class CustomerControllerTest {
     }
 
     @Test
+    @Transactional
+    @Rollback(true)
     public void should_return_deposit() throws Exception {
         request.setRequestURI("/deposit");
         request.setMethod(HttpMethod.GET.toString());
@@ -130,6 +123,8 @@ public class CustomerControllerTest {
     }
 
     @Test
+    @Transactional
+    @Rollback(true)
     public void should_return_show_balance() throws Exception {
 
         bank.addCustomer(new Customer("dan", new Date(Date.valueOf("1982-10-12").getTime()), 100.00));

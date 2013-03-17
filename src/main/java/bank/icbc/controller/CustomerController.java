@@ -23,6 +23,10 @@ public class CustomerController {
     @Qualifier("bank")
     private Bank bank;
 
+    @Autowired
+    @Qualifier("customer")
+    private Customer customerAutowired;
+
     @RequestMapping(value = "/addCustomer", method = RequestMethod.GET)
     public String addCustomer(@ModelAttribute Customer customer) {
         return "AddCustomer";
@@ -53,7 +57,7 @@ public class CustomerController {
 
     @RequestMapping(value = "/deposit", method = RequestMethod.POST)
     public String deposit(@ModelAttribute Customer customer, ModelMap modelMap) throws CustomerNotFoundException, BalanceOverdrawException {
-        bank.deposit(customer.getNickname(), customer.getBalance());
+        customerAutowired.deposit(customer.getNickname(), customer.getBalance());
 
         Customer theCustomer = bank.getCustomer(customer.getNickname());
         modelMap.addAttribute("nickname", theCustomer.getNickname());
@@ -64,7 +68,7 @@ public class CustomerController {
 
     @RequestMapping(value = "/withdraw", method = RequestMethod.POST)
     public String withdraw(@ModelAttribute Customer customer, ModelMap modelMap) throws BalanceOverdrawException, CustomerNotFoundException {
-        bank.withdraw(customer.getNickname(), customer.getBalance());
+        customerAutowired.withdraw(customer.getNickname(), customer.getBalance());
 
         Customer theCustomer = bank.getCustomer(customer.getNickname());
 

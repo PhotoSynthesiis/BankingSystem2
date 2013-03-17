@@ -3,16 +3,17 @@ package integration.domain;
 import bank.icbc.domain.Bank;
 import bank.icbc.domain.Customer;
 import bank.icbc.exception.*;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 
@@ -29,20 +30,16 @@ public class BankTest {
     @Qualifier("bank")
     private Bank bank;
 
-    private Customer customer;
+    private static Customer customer;
 
-    @Before
-    public void setUp() throws NicknameInvalidException, DateOfBirthInvalidException {
-//        customerDao.createTable(testTable);
+    @BeforeClass
+    public static void beforeClass() throws NicknameInvalidException, DateOfBirthInvalidException {
         customer = new Customer("dan", new Date(Date.valueOf("1982-10-12").getTime()), 100.00);
     }
 
-    @After
-    public void tearDown() {
-//        customerDao.deleteTable(testTable);
-    }
-
     @Test
+    @Transactional
+    @Rollback(true)
     public void should_add_customer_successfully() throws NicknameInvalidException, CustomerNotFoundException, DuplicateCustomerException, DateOfBirthInvalidException {
         bank.addCustomer(customer);
 
@@ -51,55 +48,12 @@ public class BankTest {
     }
 
     @Test
-    public void should_withdraw_successfully() throws NicknameInvalidException, DuplicateCustomerException, BalanceOverdrawException, DateOfBirthInvalidException {
-        bank.addCustomer(customer);
-
-        double balanceToWithdraw = 50.00;
-        bank.withdraw(customer.getNickname(), balanceToWithdraw);
-        double balanceGet = bank.getBalance(customer.getNickname());
-        double expectedBalance = 50.00;
-
-        assertThat(balanceGet, is(expectedBalance));
-    }
-
-    @Test
+    @Transactional
+    @Rollback(true)
     public void should_throw_exception_when_add_customer_with_same_nickname() throws NicknameInvalidException, DuplicateCustomerException, DateOfBirthInvalidException {
         expectedException.expect(DuplicateCustomerException.class);
 
         bank.addCustomer(customer);
         bank.addCustomer(customer);
-    }
-
-    @Test
-    public void should_withdraw_all_money_in_account_successfully() throws NicknameInvalidException, DuplicateCustomerException, BalanceOverdrawException, DateOfBirthInvalidException {
-        bank.addCustomer(customer);
-
-        double balanceToWithdraw = 100.00;
-        bank.withdraw(customer.getNickname(), balanceToWithdraw);
-
-        double balanceGet = bank.getBalance(customer.getNickname());
-        double expectedBalance = 0.00;
-
-        assertThat(balanceGet, is(expectedBalance));
-    }
-
-    @Test
-    public void should_throw_exception_when_overdraw() throws NicknameInvalidException, DuplicateCustomerException, BalanceOverdrawException, DateOfBirthInvalidException {
-        expectedException.expect(BalanceOverdrawException.class);
-
-        bank.addCustomer(customer);
-        double balanceToWithdraw = 200.00;
-        bank.withdraw(customer.getNickname(), balanceToWithdraw);
-    }
-
-    @Test
-    public void should_deposit_new_balance_successfully() throws DuplicateCustomerException, NicknameInvalidException, DateOfBirthInvalidException, BalanceOverdrawException {
-        bank.addCustomer(customer);
-
-        double balanceToDeposit = 23.00;
-        bank.deposit(customer.getNickname(), balanceToDeposit);
-
-        double expectedBalance = 123.00;
-        assertThat(bank.getBalance(customer.getNickname()), is(expectedBalance));
     }
 }
