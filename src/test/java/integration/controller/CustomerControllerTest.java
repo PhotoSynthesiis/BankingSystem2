@@ -2,9 +2,7 @@ package integration.controller;
 
 import bank.icbc.domain.Bank;
 import bank.icbc.domain.Customer;
-import bank.icbc.exception.DateOfBirthInvalidException;
-import bank.icbc.exception.EmailAddressInvalidException;
-import bank.icbc.exception.NicknameInvalidException;
+import bank.icbc.exception.CustomerException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -53,7 +51,7 @@ public class CustomerControllerTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Before
-    public void setUp() throws NicknameInvalidException, DateOfBirthInvalidException {
+    public void setUp() throws CustomerException {
 
         wiser = new Wiser();
         wiser.setPort(25000);
@@ -141,7 +139,7 @@ public class CustomerControllerTest {
     @Test
     @Transactional
     @Rollback(true)
-    public void should_return_show_balance() throws Exception, EmailAddressInvalidException {
+    public void should_return_show_balance() throws Exception {
 
         bank.addCustomer(new Customer("dan", new Date(Date.valueOf("1982-10-12").getTime()), 100.00, "abc@test.com"));
 
@@ -159,7 +157,7 @@ public class CustomerControllerTest {
     @Test
     @Transactional
     @Rollback(true)
-    public void should_return_show_balance_test() throws Exception, EmailAddressInvalidException {
+    public void should_return_show_balance_test() throws Exception {
 
         bank.addCustomer(new Customer("dan", new Date(Date.valueOf("1982-10-12").getTime()), 100.00, "abc@test.com"));
 

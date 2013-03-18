@@ -3,8 +3,7 @@ package bank.icbc.controller;
 import bank.icbc.domain.Bank;
 import bank.icbc.domain.Customer;
 import bank.icbc.exception.BalanceOverdrawException;
-import bank.icbc.exception.CustomerNotFoundException;
-import bank.icbc.exception.DuplicateCustomerException;
+import bank.icbc.exception.CustomerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -33,7 +32,7 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "/addCustomer", method = RequestMethod.POST)
-    public String saveCustomer(@ModelAttribute Customer customer, ModelMap modelMap) throws CustomerNotFoundException, DuplicateCustomerException {
+    public String saveCustomer(@ModelAttribute Customer customer, ModelMap modelMap) throws CustomerException {
 
         bank.addCustomer(customer);
 
@@ -58,7 +57,7 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "/deposit", method = RequestMethod.POST)
-    public String deposit(@ModelAttribute("customer") Customer customerObj, ModelMap modelMap) throws CustomerNotFoundException, BalanceOverdrawException {
+    public String deposit(@ModelAttribute("customer") Customer customerObj, ModelMap modelMap) throws BalanceOverdrawException, CustomerException {
         customer.deposit(customerObj.getBalance(), customerObj.getNickname());
 
         Customer theCustomer = bank.getCustomer(customerObj.getNickname());
@@ -69,7 +68,7 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "/withdraw", method = RequestMethod.POST)
-    public String withdraw(@ModelAttribute("customer") Customer customerObj, ModelMap modelMap) throws BalanceOverdrawException, CustomerNotFoundException {
+    public String withdraw(@ModelAttribute("customer") Customer customerObj, ModelMap modelMap) throws BalanceOverdrawException, CustomerException {
         customer.withdraw(customerObj.getBalance(), customerObj.getNickname());
 
         Customer theCustomer = bank.getCustomer(customerObj.getNickname());

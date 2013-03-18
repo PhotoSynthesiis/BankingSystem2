@@ -1,9 +1,7 @@
 package unit.domain;
 
 import bank.icbc.domain.Customer;
-import bank.icbc.exception.DateOfBirthInvalidException;
-import bank.icbc.exception.EmailAddressInvalidException;
-import bank.icbc.exception.NicknameInvalidException;
+import bank.icbc.exception.CustomerException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -26,7 +24,7 @@ public class CustomerTest {
     private Wiser wiser;
 
     @Before
-    public void setUp() throws NicknameInvalidException, DateOfBirthInvalidException, EmailAddressInvalidException {
+    public void setUp() throws CustomerException {
         wiser = new Wiser();
         wiser.setPort(25000);
         wiser.start();
@@ -40,87 +38,87 @@ public class CustomerTest {
     }
 
     @Test
-    public void should_throw_exception_when_add_customer_without_nickname() throws NicknameInvalidException {
-        expectedException.expect(NicknameInvalidException.class);
+    public void should_throw_exception_when_add_customer_without_nickname() throws CustomerException {
+        expectedException.expect(CustomerException.class);
 
         String nickName = "";
         customerToBeSet.setNickname(nickName);
     }
 
     @Test
-    public void should_throw_exception_when_nickname_contains_only_space() throws NicknameInvalidException {
-        expectedException.expect(NicknameInvalidException.class);
+    public void should_throw_exception_when_nickname_contains_only_space() throws CustomerException {
+        expectedException.expect(CustomerException.class);
 
         String nickName = "       ";
         customerToBeSet.setNickname(nickName);
     }
 
     @Test
-    public void should_throw_exception_when_nickname_contains_special_characters() throws NicknameInvalidException {
-        expectedException.expect(NicknameInvalidException.class);
+    public void should_throw_exception_when_nickname_contains_special_characters() throws CustomerException {
+        expectedException.expect(CustomerException.class);
         String nickName = "^&*";
         customerToBeSet.setNickname(nickName);
     }
 
     @Test
-    public void should_throw_exception_when_nickname_contains_upper_case() throws NicknameInvalidException {
-        expectedException.expect(NicknameInvalidException.class);
+    public void should_throw_exception_when_nickname_contains_upper_case() throws CustomerException {
+        expectedException.expect(CustomerException.class);
         String nickName = "A2s";
         customerToBeSet.setNickname(nickName);
     }
 
     @Test
-    public void should_set_nickname_successfully() throws NicknameInvalidException {
+    public void should_set_nickname_successfully() throws CustomerException {
         String nickname = "bradpit";
         customerToBeSet.setNickname(nickname);
     }
 
     @Test
-    public void should_throw_exception_when_dateOfBirth_is_null() throws NicknameInvalidException, DateOfBirthInvalidException {
-        expectedException.expect(DateOfBirthInvalidException.class);
+    public void should_throw_exception_when_dateOfBirth_is_null() throws CustomerException {
+        expectedException.expect(CustomerException.class);
         Date dateOfBirth = null;
         customerToBeSet.setDateOfBirth(dateOfBirth);
     }
 
     @Test
-    public void should_set_dateOfBirth_successfully() throws DateOfBirthInvalidException {
+    public void should_set_dateOfBirth_successfully() throws CustomerException {
         customerToBeSet.setDateOfBirth(new Date(Date.valueOf("1988-10-02").getTime()));
     }
 
     @Test
-    public void should_throw_exception_when_email_address_contains_special_character() throws EmailAddressInvalidException {
-        expectedException.expect(EmailAddressInvalidException.class);
+    public void should_throw_exception_when_email_address_contains_special_character() throws CustomerException {
+        expectedException.expect(CustomerException.class);
 
         String emailAddress = "%^&";
         customerToBeSet.setEmailAddress(emailAddress);
     }
 
     @Test
-    public void should_throw_exception_when_email_address_contains_two_at_icons() throws EmailAddressInvalidException {
-        expectedException.expect(EmailAddressInvalidException.class);
+    public void should_throw_exception_when_email_address_contains_two_at_icons() throws CustomerException {
+        expectedException.expect(CustomerException.class);
 
         String emailAddress = "a@b@c.com";
         customerToBeSet.setEmailAddress(emailAddress);
     }
 
     @Test
-    public void should_throw_exception_when_email_address_is_empty() throws EmailAddressInvalidException {
-        expectedException.expect(EmailAddressInvalidException.class);
+    public void should_throw_exception_when_email_address_is_empty() throws CustomerException {
+        expectedException.expect(CustomerException.class);
 
         String emailAddress = "";
         customerToBeSet.setEmailAddress(emailAddress);
     }
 
     @Test
-    public void should_throw_exception_when_email_address_contains_only_white_space() throws EmailAddressInvalidException {
-        expectedException.expect(EmailAddressInvalidException.class);
+    public void should_throw_exception_when_email_address_contains_only_white_space() throws CustomerException {
+        expectedException.expect(CustomerException.class);
 
         String emailAddress = "    ";
         customerToBeSet.setEmailAddress(emailAddress);
     }
 
     @Test
-    public void should_set_email_address_successfully() throws EmailAddressInvalidException {
+    public void should_set_email_address_successfully() throws CustomerException {
         String emailAddress = "abc@test.com";
         customerToBeSet.setEmailAddress(emailAddress);
     }

@@ -1,8 +1,7 @@
 package bank.icbc.domain;
 
 import bank.icbc.database.dao.CustomerDao;
-import bank.icbc.exception.CustomerNotFoundException;
-import bank.icbc.exception.DuplicateCustomerException;
+import bank.icbc.exception.CustomerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DuplicateKeyException;
@@ -19,11 +18,11 @@ public class Bank {
     @Autowired
     private MailSender mailSender;
 
-    public void addCustomer(Customer customer) throws DuplicateCustomerException {
+    public void addCustomer(Customer customer) throws CustomerException {
         try {
             customerDao.add(customer);
         } catch (DuplicateKeyException exception) {
-            throw new DuplicateCustomerException("Customer with nickname " + customer.getNickname() + " has already existed");
+            throw new CustomerException("Customer with nickname " + customer.getNickname() + " has already existed");
         }
         sendEmailToCustomer(customer);
     }
@@ -32,11 +31,11 @@ public class Bank {
         mailSender.sendEmail(customer.getNickname(), customer.getEmailAddress());
     }
 
-    public Customer getCustomer(String nickname) throws CustomerNotFoundException {
+    public Customer getCustomer(String nickname) throws CustomerException {
         try {
             return customerDao.get(nickname);
         } catch (EmptyResultDataAccessException exception) {
-            throw new CustomerNotFoundException("Customer with nickname " + nickname + " is not found");
+            throw new CustomerException("Customer with nickname " + nickname + " is not found");
         }
     }
 }

@@ -55,8 +55,7 @@ public class CustomerServiceTest {
     @Test
     @Transactional
     @Rollback(true)
-    public void should_deposit_new_balance_successfully() throws DuplicateCustomerException, NicknameInvalidException,
-            DateOfBirthInvalidException, BalanceOverdrawException, EmailAddressInvalidException {
+    public void should_deposit_new_balance_successfully() throws CustomerException, BalanceOverdrawException {
         Customer customer1 = new Customer("dan", new Date(Date.valueOf("1988-09-03").getTime()), 310, "dan@test.com");
 
         bank.addCustomer(customer1);
@@ -73,8 +72,7 @@ public class CustomerServiceTest {
     @Test
     @Transactional
     @Rollback(true)
-    public void should_withdraw_successfully() throws NicknameInvalidException, DuplicateCustomerException,
-            BalanceOverdrawException, DateOfBirthInvalidException, EmailAddressInvalidException {
+    public void should_withdraw_successfully() throws CustomerException, BalanceOverdrawException {
         Customer customer1 = new Customer("dan", new Date(Date.valueOf("1988-09-03").getTime()), 310, "dan@test.com");
 
         bank.addCustomer(customer1);
@@ -91,8 +89,7 @@ public class CustomerServiceTest {
     @Test
     @Transactional
     @Rollback(true)
-    public void should_withdraw_all_money_in_account_successfully() throws NicknameInvalidException, DuplicateCustomerException,
-            BalanceOverdrawException, DateOfBirthInvalidException, EmailAddressInvalidException {
+    public void should_withdraw_all_money_in_account_successfully() throws CustomerException, BalanceOverdrawException {
         Customer customer1 = new Customer("dan", new Date(Date.valueOf("1988-09-03").getTime()), 310, "dan@test.com");
 
         bank.addCustomer(customer1);
@@ -109,8 +106,7 @@ public class CustomerServiceTest {
     @Test
     @Transactional
     @Rollback(true)
-    public void should_throw_exception_when_overdraw() throws NicknameInvalidException, DuplicateCustomerException,
-            BalanceOverdrawException, DateOfBirthInvalidException, EmailAddressInvalidException {
+    public void should_throw_exception_when_overdraw() throws CustomerException, BalanceOverdrawException {
         expectedException.expect(BalanceOverdrawException.class);
 
         Customer customer1 = new Customer("dan", new Date(Date.valueOf("1988-09-03").getTime()), 310, "dan@test.com");

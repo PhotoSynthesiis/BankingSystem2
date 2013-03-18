@@ -33,7 +33,7 @@ public class BankTest {
     private Wiser wiser;
 
     @BeforeClass
-    public static void beforeClass() throws NicknameInvalidException, DateOfBirthInvalidException, EmailAddressInvalidException {
+    public static void beforeClass() throws CustomerException {
         customer = new Customer("dan", new Date(Date.valueOf("1982-10-12").getTime()), 100.00, "abc@test.com");
     }
 
@@ -52,7 +52,7 @@ public class BankTest {
     @Test
     @Transactional
     @Rollback(true)
-    public void should_add_customer_successfully() throws CustomerNotFoundException, DuplicateCustomerException {
+    public void should_add_customer_successfully() throws CustomerException {
         bank.addCustomer(customer);
 
         Customer customerGet = bank.getCustomer("dan");
@@ -62,8 +62,8 @@ public class BankTest {
     @Test
     @Transactional
     @Rollback(true)
-    public void should_throw_exception_when_add_customer_with_same_nickname() throws DuplicateCustomerException{
-        expectedException.expect(DuplicateCustomerException.class);
+    public void should_throw_exception_when_add_customer_with_same_nickname() throws CustomerException{
+        expectedException.expect(CustomerException.class);
 
         bank.addCustomer(customer);
         bank.addCustomer(customer);

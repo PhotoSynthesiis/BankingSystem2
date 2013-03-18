@@ -1,9 +1,7 @@
 package bank.icbc.database.mapper;
 
 import bank.icbc.domain.Customer;
-import bank.icbc.exception.DateOfBirthInvalidException;
-import bank.icbc.exception.EmailAddressInvalidException;
-import bank.icbc.exception.NicknameInvalidException;
+import bank.icbc.exception.CustomerException;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.Date;
@@ -20,11 +18,7 @@ public class CustomerMapper implements RowMapper<Customer> {
         Customer customer = null;
         try {
             customer = new Customer(nickname, dateOfBirth, balance, emailAddress);
-        } catch (NicknameInvalidException e) {
-            e.printStackTrace();
-        } catch (DateOfBirthInvalidException e) {
-            e.printStackTrace();
-        } catch (EmailAddressInvalidException e) {
+        } catch (CustomerException e) {
             e.printStackTrace();
         }
         return customer;

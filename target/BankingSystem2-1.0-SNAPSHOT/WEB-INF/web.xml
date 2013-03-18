@@ -33,12 +33,7 @@
     </welcome-file-list>
 
     <error-page>
-        <exception-type>bank.icbc.exception.NicknameInvalidException</exception-type>
-        <location>/WEB-INF/jsp/exception.jsp</location>
-    </error-page>
-
-    <error-page>
-        <exception-type>bank.icbc.exception.CustomerNotFoundException</exception-type>
+        <exception-type>bank.icbc.exception.CustomerException</exception-type>
         <location>/WEB-INF/jsp/exception.jsp</location>
     </error-page>
 </web-app>

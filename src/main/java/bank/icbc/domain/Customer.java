@@ -1,9 +1,7 @@
 package bank.icbc.domain;
 
 import bank.icbc.exception.BalanceOverdrawException;
-import bank.icbc.exception.DateOfBirthInvalidException;
-import bank.icbc.exception.EmailAddressInvalidException;
-import bank.icbc.exception.NicknameInvalidException;
+import bank.icbc.exception.CustomerException;
 import bank.icbc.validator.CustomerValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,33 +24,32 @@ public class Customer {
         // default constructor to make the CustomerControllerTest pass
     }
 
-    public Customer(String nickname, Date dateOfBirth, double balance, String emailAddress) throws NicknameInvalidException,
-            DateOfBirthInvalidException, EmailAddressInvalidException {
+    public Customer(String nickname, Date dateOfBirth, double balance, String emailAddress) throws CustomerException {
         setNickname(nickname);
         setDateOfBirth(dateOfBirth);
         setBalance(balance);
         setEmailAddress(emailAddress);
     }
 
-    public void setNickname(String nickname) throws NicknameInvalidException {
+    public void setNickname(String nickname) throws CustomerException {
 
         if (!CustomerValidator.isNicknameValid(nickname)) {
-            throw new NicknameInvalidException("Nickname should be combination of lower case of letters and digits (empty value or space is not allowed)");
+            throw new CustomerException("Nickname should be combination of lower case of letters and digits (empty value or space is not allowed)");
         }
 
         this.nickname = nickname;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) throws DateOfBirthInvalidException {
+    public void setDateOfBirth(Date dateOfBirth) throws CustomerException {
         if (!CustomerValidator.isDateOfBirthValid(dateOfBirth)) {
-            throw new DateOfBirthInvalidException("Date of birth is invalid");
+            throw new CustomerException("Date of birth is invalid");
         }
         this.dateOfBirth = dateOfBirth;
     }
 
-    public void setEmailAddress(String emailAddress) throws EmailAddressInvalidException {
+    public void setEmailAddress(String emailAddress) throws CustomerException {
         if (!CustomerValidator.isEmailAddressValid(emailAddress)) {
-            throw new EmailAddressInvalidException("Format of email address is invalid");
+            throw new CustomerException("Format of email address is invalid");
         }
         this.emailAddress = emailAddress;
     }

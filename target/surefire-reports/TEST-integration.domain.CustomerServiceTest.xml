@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="0.05" errors="0" skipped="0" tests="4" name="integration.domain.CustomerServiceTest">
+<testsuite failures="0" time="0.045" errors="0" skipped="0" tests="4" name="integration.domain.CustomerServiceTest">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Libraries"/>
@@ -64,8 +64,8 @@
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase time="0.015" classname="integration.domain.CustomerServiceTest" name="should_throw_exception_when_overdraw"/>
-  <testcase time="0.012" classname="integration.domain.CustomerServiceTest" name="should_deposit_new_balance_successfully"/>
+  <testcase time="0.014" classname="integration.domain.CustomerServiceTest" name="should_throw_exception_when_overdraw"/>
+  <testcase time="0.01" classname="integration.domain.CustomerServiceTest" name="should_deposit_new_balance_successfully"/>
   <testcase time="0.01" classname="integration.domain.CustomerServiceTest" name="should_withdraw_all_money_in_account_successfully"/>
-  <testcase time="0.013" classname="integration.domain.CustomerServiceTest" name="should_withdraw_successfully"/>
+  <testcase time="0.011" classname="integration.domain.CustomerServiceTest" name="should_withdraw_successfully"/>
 </testsuite>
