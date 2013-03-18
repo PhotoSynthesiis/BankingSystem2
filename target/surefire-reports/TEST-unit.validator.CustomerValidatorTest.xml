@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="0.003" errors="0" skipped="0" tests="8" name="unit.validator.CustomerValidatorTest">
+<testsuite failures="0" time="0.005" errors="0" skipped="0" tests="8" name="unit.validator.CustomerValidatorTest">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Libraries"/>
@@ -64,12 +64,12 @@
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase time="0" classname="unit.validator.CustomerValidatorTest" name="should_return_false_when_nickname_contains_special_characters"/>
+  <testcase time="0.001" classname="unit.validator.CustomerValidatorTest" name="should_return_false_when_nickname_contains_special_characters"/>
   <testcase time="0" classname="unit.validator.CustomerValidatorTest" name="should_return_false_when_nickname_contains_only_uppercase_letters"/>
   <testcase time="0" classname="unit.validator.CustomerValidatorTest" name="should_return_true_when_dateOfBirth_is_valid"/>
   <testcase time="0" classname="unit.validator.CustomerValidatorTest" name="should_return_true_when_nickname_is_valid"/>
   <testcase time="0" classname="unit.validator.CustomerValidatorTest" name="should_return_false_when_nickname_is_empty"/>
   <testcase time="0" classname="unit.validator.CustomerValidatorTest" name="should_return_false_when_dateOfBirth_is_null"/>
   <testcase time="0" classname="unit.validator.CustomerValidatorTest" name="should_return_false_when_nickname_is_null"/>
-  <testcase time="0" classname="unit.validator.CustomerValidatorTest" name="should_return_false_when_nickname_contains_only_space"/>
+  <testcase time="0.001" classname="unit.validator.CustomerValidatorTest" name="should_return_false_when_nickname_contains_only_space"/>
 </testsuite>

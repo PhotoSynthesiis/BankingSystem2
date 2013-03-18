@@ -25,7 +25,7 @@ public class CustomerController {
 
     @Autowired
     @Qualifier("customer")
-    private Customer customerAutowired;
+    private Customer customer;
 
     @RequestMapping(value = "/addCustomer", method = RequestMethod.GET)
     public String addCustomer(@ModelAttribute Customer customer) {
@@ -58,10 +58,10 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "/deposit", method = RequestMethod.POST)
-    public String deposit(@ModelAttribute Customer customer, ModelMap modelMap) throws CustomerNotFoundException, BalanceOverdrawException {
-        customerAutowired.deposit(customer.getNickname(), customer.getBalance());
+    public String deposit(@ModelAttribute("customer") Customer customerObj, ModelMap modelMap) throws CustomerNotFoundException, BalanceOverdrawException {
+        customer.deposit(customerObj.getBalance(), customerObj.getNickname());
 
-        Customer theCustomer = bank.getCustomer(customer.getNickname());
+        Customer theCustomer = bank.getCustomer(customerObj.getNickname());
         modelMap.addAttribute("nickname", theCustomer.getNickname());
         modelMap.addAttribute("balance", theCustomer.getBalance());
 
@@ -69,10 +69,10 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "/withdraw", method = RequestMethod.POST)
-    public String withdraw(@ModelAttribute Customer customer, ModelMap modelMap) throws BalanceOverdrawException, CustomerNotFoundException {
-        customerAutowired.withdraw(customer.getNickname(), customer.getBalance());
+    public String withdraw(@ModelAttribute("customer") Customer customerObj, ModelMap modelMap) throws BalanceOverdrawException, CustomerNotFoundException {
+        customer.withdraw(customerObj.getBalance(), customerObj.getNickname());
 
-        Customer theCustomer = bank.getCustomer(customer.getNickname());
+        Customer theCustomer = bank.getCustomer(customerObj.getNickname());
 
         modelMap.addAttribute("nickname", theCustomer.getNickname());
         modelMap.addAttribute("balance", theCustomer.getBalance());

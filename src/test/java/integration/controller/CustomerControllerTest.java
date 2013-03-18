@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpMethod;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -45,6 +46,7 @@ public class CustomerControllerTest {
     private RequestMappingHandlerAdapter handlerAdapter;
 
     @Autowired
+    @Qualifier("bank")
     private Bank bank;
 
     @Rule
@@ -145,9 +147,27 @@ public class CustomerControllerTest {
 
         request.setParameter("nickname", "dan");
         request.setParameter("balance", "12.00");
-
         request.setRequestURI("/deposit");
         request.setMethod(HttpMethod.POST.toString());
+
+        Object controller = mappingHandler.getHandler(request).getHandler();
+
+        ModelAndView modelAndView = handlerAdapter.handle(request, response, controller);
+        assertThat("ShowBalance", is(modelAndView.getViewName()));
+    }
+
+    @Test
+    @Transactional
+    @Rollback(true)
+    public void should_return_show_balance_test() throws Exception, EmailAddressInvalidException {
+
+        bank.addCustomer(new Customer("dan", new Date(Date.valueOf("1982-10-12").getTime()), 100.00, "abc@test.com"));
+
+        request.setParameter("nickname", "dan");
+        request.setParameter("balance", "12.00");
+        request.setRequestURI("/withdraw");
+        request.setMethod(HttpMethod.POST.toString());
+
         Object controller = mappingHandler.getHandler(request).getHandler();
 
         ModelAndView modelAndView = handlerAdapter.handle(request, response, controller);

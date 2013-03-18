@@ -42,7 +42,7 @@ public class MailSenderTest {
     }
 
     @Test
-    public void shouldFormCorrectEmailContent() throws DuplicateCustomerException, MessagingException, IOException {
+    public void should_form_correct_email_content() throws DuplicateCustomerException, MessagingException, IOException {
         String nickname = "nick";
         String emailAddress = "nick@test.com";
         mailSender.sendEmail(nickname, emailAddress);
@@ -55,7 +55,6 @@ public class MailSenderTest {
 
     @Test
     public void should_send_email_successfully() throws MessagingException, IOException {
-
         String customerNickname = "adam";
         String customerEmail = "adam@test.com";
         mailSender.sendEmail(customerNickname, customerEmail);
