@@ -3,7 +3,8 @@ package integration.domain;
 import bank.icbc.domain.Bank;
 import bank.icbc.domain.Customer;
 import bank.icbc.domain.CustomerService;
-import bank.icbc.exception.*;
+import bank.icbc.exception.BalanceOverdrawException;
+import bank.icbc.exception.CustomerException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -40,11 +41,28 @@ public class CustomerServiceTest {
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
+    private Customer customer;
+
     @Before
-    public void setUp() {
+    public void setUp() throws CustomerException {
+        setUpWiserServer();
+        addCustomer();
+    }
+
+    private void setUpWiserServer() {
         wiser = new Wiser();
         wiser.setPort(25000);
         wiser.start();
+    }
+
+    private void addCustomer() throws CustomerException {
+        String nickname = "dan";
+        Date dateOfBirth = new Date(Date.valueOf("1988-09-03").getTime());
+        int balance = 310;
+        String emailAddress = "dan@test.com";
+
+        customer = new Customer(nickname, dateOfBirth, balance, emailAddress);
+        bank.addCustomer(customer);
     }
 
     @After
@@ -56,15 +74,11 @@ public class CustomerServiceTest {
     @Transactional
     @Rollback(true)
     public void should_deposit_new_balance_successfully() throws CustomerException, BalanceOverdrawException {
-        Customer customer1 = new Customer("dan", new Date(Date.valueOf("1988-09-03").getTime()), 310, "dan@test.com");
-
-        bank.addCustomer(customer1);
-
         double balanceToDeposit = 23.00;
-        service.deposit(customer1.getNickname(), balanceToDeposit);
+        service.deposit(customer.getNickname(), balanceToDeposit);
 
         double expectedBalance = 333.00;
-        double balance = service.getBalance(customer1.getNickname());
+        double balance = service.getBalance(customer.getNickname());
 
         assertThat(balance, is(expectedBalance));
     }
@@ -73,14 +87,10 @@ public class CustomerServiceTest {
     @Transactional
     @Rollback(true)
     public void should_withdraw_successfully() throws CustomerException, BalanceOverdrawException {
-        Customer customer1 = new Customer("dan", new Date(Date.valueOf("1988-09-03").getTime()), 310, "dan@test.com");
-
-        bank.addCustomer(customer1);
-
         double balanceToWithdraw = 50.00;
-        service.withdraw(customer1.getNickname(), balanceToWithdraw);
+        service.withdraw(customer.getNickname(), balanceToWithdraw);
 
-        double balance = service.getBalance(customer1.getNickname());
+        double balance = service.getBalance(customer.getNickname());
         double expectedBalance = 260.00;
 
         assertThat(balance, is(expectedBalance));
@@ -90,17 +100,13 @@ public class CustomerServiceTest {
     @Transactional
     @Rollback(true)
     public void should_withdraw_all_money_in_account_successfully() throws CustomerException, BalanceOverdrawException {
-        Customer customer1 = new Customer("dan", new Date(Date.valueOf("1988-09-03").getTime()), 310, "dan@test.com");
-
-        bank.addCustomer(customer1);
-
         double balanceToWithdraw = 310.00;
-        service.withdraw(customer1.getNickname(), balanceToWithdraw);
+        service.withdraw(customer.getNickname(), balanceToWithdraw);
 
-        double balanceGet = service.getBalance(customer1.getNickname());
+        double balance = service.getBalance(customer.getNickname());
         double expectedBalance = 0.00;
 
-        assertThat(balanceGet, is(expectedBalance));
+        assertThat(balance, is(expectedBalance));
     }
 
     @Test
@@ -109,10 +115,7 @@ public class CustomerServiceTest {
     public void should_throw_exception_when_overdraw() throws CustomerException, BalanceOverdrawException {
         expectedException.expect(BalanceOverdrawException.class);
 
-        Customer customer1 = new Customer("dan", new Date(Date.valueOf("1988-09-03").getTime()), 310, "dan@test.com");
-
-        bank.addCustomer(customer1);
         double balanceToWithdraw = 400.00;
-        service.withdraw(customer1.getNickname(), balanceToWithdraw);
+        service.withdraw(customer.getNickname(), balanceToWithdraw);
     }
 }

@@ -15,13 +15,13 @@ public class CustomerService {
 
     public void withdraw(String nickname, double balanceToWithdraw) throws BalanceOverdrawException {
         Customer customer = customerDao.get(nickname);
-        customer.setBalance(calculateBalanceLeft(nickname, balanceToWithdraw, !true));
+        customer.setBalance(calculateBalanceLeft(nickname, balanceToWithdraw, TransactionType.WITHDRAW));
         customerDao.update(customer);
     }
 
     public void deposit(String nickname, double balanceToDeposit) throws BalanceOverdrawException {
         Customer customer = customerDao.get(nickname);
-        customer.setBalance(calculateBalanceLeft(nickname, balanceToDeposit, !false));
+        customer.setBalance(calculateBalanceLeft(nickname, balanceToDeposit, TransactionType.DEPOSIT));
 
         customerDao.update(customer);
     }
@@ -31,8 +31,8 @@ public class CustomerService {
         return customer.getBalance();
     }
 
-    private double calculateBalanceLeft(String nickname, double balance, boolean deposit) throws BalanceOverdrawException {
-        if (deposit) {
+    private double calculateBalanceLeft(String nickname, double balance, TransactionType transactionType) throws BalanceOverdrawException {
+        if (transactionType.equals(TransactionType.DEPOSIT)) {
              return getBalance(nickname) + balance;
         }
 

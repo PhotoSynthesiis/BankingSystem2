@@ -7,8 +7,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Date;
-
 @Component
 @Repository("customerDao")
 public class CustomerDao {
@@ -28,12 +26,8 @@ public class CustomerDao {
     }
 
     public void update(Customer customer) {
-        String nickname = customer.getNickname();
-        Date dateOfBirth = customer.getDateOfBirth();
-        double balance = customer.getBalance();
-        String emailAddress = customer.getEmailAddress();
-
         String SQL = "update customer set dateOfBirth = ?, balance = ?, emailAddress = ? where nickname = ?";
-        jdbcTemplate.update(SQL, new Object[]{dateOfBirth, balance, emailAddress, nickname});
+        jdbcTemplate.update(SQL, new Object[]{customer.getDateOfBirth(),
+                customer.getBalance(), customer.getEmailAddress(), customer.getNickname()});
     }
 }

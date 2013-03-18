@@ -37,9 +37,11 @@ public class CustomerControllerTest {
     private MockHttpServletResponse response;
     private Wiser wiser;
 
+    @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
     private RequestMappingHandlerMapping mappingHandler;
 
+    @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
     private RequestMappingHandlerAdapter handlerAdapter;
 
@@ -52,7 +54,6 @@ public class CustomerControllerTest {
 
     @Before
     public void setUp() throws CustomerException {
-
         wiser = new Wiser();
         wiser.setPort(25000);
         wiser.start();
@@ -86,12 +87,10 @@ public class CustomerControllerTest {
         request.setParameter("nickname", "dan");
         request.setParameter("dateOfBirth", "1980-09-01");
         request.setParameter("emailAddress", "abc@test.com");
-
         request.setRequestURI("/addCustomer");
         request.setMethod(HttpMethod.POST.toString());
 
         Object controller = mappingHandler.getHandler(request).getHandler();
-
         ModelAndView modelAndView = handlerAdapter.handle(request, response, controller);
 
         assertThat("ShowCustomer", is(modelAndView.getViewName()));
@@ -103,8 +102,8 @@ public class CustomerControllerTest {
     public void should_return_welcome() throws Exception {
         request.setRequestURI("/welcome");
         request.setMethod(HttpMethod.GET.toString());
-        Object controller = mappingHandler.getHandler(request).getHandler();
 
+        Object controller = mappingHandler.getHandler(request).getHandler();
         ModelAndView modelAndView = handlerAdapter.handle(request, response, controller);
 
         assertThat("Welcome", is(modelAndView.getViewName()));
@@ -116,8 +115,8 @@ public class CustomerControllerTest {
     public void should_return_withdraw() throws Exception {
         request.setRequestURI("/withdraw");
         request.setMethod(HttpMethod.GET.toString());
-        Object controller = mappingHandler.getHandler(request).getHandler();
 
+        Object controller = mappingHandler.getHandler(request).getHandler();
         ModelAndView modelAndView = handlerAdapter.handle(request, response, controller);
 
         assertThat("Withdraw", is(modelAndView.getViewName()));
@@ -129,8 +128,8 @@ public class CustomerControllerTest {
     public void should_return_deposit() throws Exception {
         request.setRequestURI("/deposit");
         request.setMethod(HttpMethod.GET.toString());
-        Object controller = mappingHandler.getHandler(request).getHandler();
 
+        Object controller = mappingHandler.getHandler(request).getHandler();
         ModelAndView modelAndView = handlerAdapter.handle(request, response, controller);
 
         assertThat("Deposit", is(modelAndView.getViewName()));
@@ -140,8 +139,7 @@ public class CustomerControllerTest {
     @Transactional
     @Rollback(true)
     public void should_return_show_balance() throws Exception {
-
-        bank.addCustomer(new Customer("dan", new Date(Date.valueOf("1982-10-12").getTime()), 100.00, "abc@test.com"));
+        addCustomerToBank();
 
         request.setParameter("nickname", "dan");
         request.setParameter("balance", "12.00");
@@ -149,8 +147,8 @@ public class CustomerControllerTest {
         request.setMethod(HttpMethod.POST.toString());
 
         Object controller = mappingHandler.getHandler(request).getHandler();
-
         ModelAndView modelAndView = handlerAdapter.handle(request, response, controller);
+
         assertThat("ShowBalance", is(modelAndView.getViewName()));
     }
 
@@ -158,8 +156,7 @@ public class CustomerControllerTest {
     @Transactional
     @Rollback(true)
     public void should_return_show_balance_test() throws Exception {
-
-        bank.addCustomer(new Customer("dan", new Date(Date.valueOf("1982-10-12").getTime()), 100.00, "abc@test.com"));
+        addCustomerToBank();
 
         request.setParameter("nickname", "dan");
         request.setParameter("balance", "12.00");
@@ -167,8 +164,12 @@ public class CustomerControllerTest {
         request.setMethod(HttpMethod.POST.toString());
 
         Object controller = mappingHandler.getHandler(request).getHandler();
-
         ModelAndView modelAndView = handlerAdapter.handle(request, response, controller);
+
         assertThat("ShowBalance", is(modelAndView.getViewName()));
+    }
+
+    private void addCustomerToBank() throws CustomerException {
+        bank.addCustomer(new Customer("dan", new Date(Date.valueOf("1982-10-12").getTime()), 100.00, "abc@test.com"));
     }
 }
