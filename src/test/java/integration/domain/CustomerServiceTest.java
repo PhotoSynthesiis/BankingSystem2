@@ -58,10 +58,11 @@ public class CustomerServiceTest {
     private void addCustomer() throws CustomerException {
         String nickname = "dan";
         Date dateOfBirth = new Date(Date.valueOf("1988-09-03").getTime());
-        int balance = 310;
+        int balance = 100;
         String emailAddress = "dan@test.com";
+        boolean isPremium = false;
 
-        customer = new Customer(nickname, dateOfBirth, balance, emailAddress);
+        customer = new Customer(nickname, dateOfBirth, balance, emailAddress, isPremium);
         bank.addCustomer(customer);
     }
 
@@ -77,7 +78,7 @@ public class CustomerServiceTest {
         double balanceToDeposit = 23.00;
         service.deposit(customer.getNickname(), balanceToDeposit);
 
-        double expectedBalance = 333.00;
+        double expectedBalance = 123.00;
         double balance = service.getBalance(customer.getNickname());
 
         assertThat(balance, is(expectedBalance));
@@ -91,7 +92,7 @@ public class CustomerServiceTest {
         service.withdraw(customer.getNickname(), balanceToWithdraw);
 
         double balance = service.getBalance(customer.getNickname());
-        double expectedBalance = 260.00;
+        double expectedBalance = 50.00;
 
         assertThat(balance, is(expectedBalance));
     }
@@ -100,7 +101,7 @@ public class CustomerServiceTest {
     @Transactional
     @Rollback(true)
     public void should_withdraw_all_money_in_account_successfully() throws CustomerException, BalanceOverdrawException {
-        double balanceToWithdraw = 310.00;
+        double balanceToWithdraw = 100.00;
         service.withdraw(customer.getNickname(), balanceToWithdraw);
 
         double balance = service.getBalance(customer.getNickname());
@@ -118,4 +119,77 @@ public class CustomerServiceTest {
         double balanceToWithdraw = 400.00;
         service.withdraw(customer.getNickname(), balanceToWithdraw);
     }
+
+
+    @Test
+    @Transactional
+    @Rollback(true)
+    public void should_not_become_premium_user_when_balance_never_over_40000() throws BalanceOverdrawException, CustomerException {
+        int balanceToDeposit = 39899;
+        service.deposit(customer.getNickname(), balanceToDeposit);
+
+        boolean isNonePremiumCustomer = false;
+        Customer nonPremiumCustomer = bank.getCustomer(customer.getNickname());
+
+        assertThat(nonPremiumCustomer.isPremium(), is(isNonePremiumCustomer));
+    }
+
+    @Test
+    @Transactional
+    @Rollback(true)
+    public void should_become_premium_user_when_balance_is_over_40000() throws BalanceOverdrawException, CustomerException {
+        int balanceToDeposit = 40000;
+        service.deposit(customer.getNickname(), balanceToDeposit);
+
+        boolean isPremiumCustomer = true;
+        Customer premiumCustomer = bank.getCustomer(customer.getNickname());
+
+        assertThat(premiumCustomer.isPremium(), is(isPremiumCustomer));
+    }
+
+    @Test
+    @Transactional
+    @Rollback(true)
+    public void should_always_be_premium_customer_if_once_become_a_premium_customer_and_withdraw_some_money()
+            throws BalanceOverdrawException, CustomerException {
+
+        int balanceToDeposit = 40000;
+        service.deposit(customer.getNickname(), balanceToDeposit);
+
+        int balanceToWithdraw = 30000;
+        service.withdraw(customer.getNickname(), balanceToWithdraw);
+
+        boolean isPremiumCustomer = true;
+        Customer premiumCustomer = bank.getCustomer(customer.getNickname());
+
+        assertThat(premiumCustomer.isPremium(), is(isPremiumCustomer));
+    }
+
+    @Test
+    @Transactional
+    @Rollback(true)
+    public void should_always_be_premium_customer_if_once_become_a_premium_customer_and_withdraw_all_money()
+            throws BalanceOverdrawException, CustomerException {
+        int balanceToDeposit = 40000;
+        service.deposit(customer.getNickname(), balanceToDeposit);
+
+        int balanceToWithdraw = 40100;
+        service.withdraw(customer.getNickname(), balanceToWithdraw);
+
+        boolean isPremiumCustomer = true;
+        Customer premiumCustomer = bank.getCustomer(customer.getNickname());
+
+        assertThat(premiumCustomer.isPremium(), is(isPremiumCustomer));
+    }
+
+//    @Test
+//    @Transactional
+//    @Rollback(true)
+//    public void should_the_user_become_premium_when_balance_is_over_40000() throws BalanceOverdrawException {
+//        service.deposit(customer.getNickname(), 40000.00);
+//
+//        boolean hasBecomePremium = true;
+//
+//        assertThat(customer.isPremium() , is(hasBecomePremium));
+//    }
 }

@@ -10,17 +10,31 @@ public class MailSender {
     @Autowired
     private JavaMailSenderImpl mailSender;
 
-    public void sendEmail(String nickname, String emailAddress) {
-        mailSender.send(buildMessage(nickname, emailAddress));
+    public void sendEmailAfterUserRegistration(String nickname, String emailAddress) {
+        String subject = "Welcome!";
+        String content = format("Dear %s, welcome to the bank", nickname);
+
+        mailSender.send(buildMessage(emailAddress, subject, content));
     }
 
-    private SimpleMailMessage buildMessage(String nickname, String emailAddress) {
+    public void sendEmailWhenUserBecomePremium(String nickname, String emailAddress) {
+        String subject = "Notice";
+        String content = format("%s is now a premium customer", nickname);
+
+        mailSender.send(buildMessage(emailAddress, subject, content));
+    }
+
+    private SimpleMailMessage buildMessage(String emailAddress, String subject, String content) {
+        String fromAddress = "admin@thebank.com";
+
         SimpleMailMessage mailMessage = new SimpleMailMessage();
 
         mailMessage.setTo(emailAddress);
-        mailMessage.setFrom("admin@thebank.com");
-        mailMessage.setSubject("Welcome!");
-        mailMessage.setText(format("Dear %s, welcome to the bank", nickname));
+        mailMessage.setFrom(fromAddress);
+        mailMessage.setSubject(subject);
+        mailMessage.setText(content);
+
         return mailMessage;
     }
+
 }

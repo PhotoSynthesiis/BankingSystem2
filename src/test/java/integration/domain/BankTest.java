@@ -2,7 +2,7 @@ package integration.domain;
 
 import bank.icbc.domain.Bank;
 import bank.icbc.domain.Customer;
-import bank.icbc.exception.*;
+import bank.icbc.exception.CustomerException;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
@@ -13,14 +13,17 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import org.subethamail.wiser.Wiser;
+import org.subethamail.wiser.WiserMessage;
 
 import java.sql.Date;
 
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:applicationContextDataSource-test.xml", "classpath:applicationContext-servlet-test.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContextDataSource-test.xml",
+        "classpath:applicationContext-servlet-test.xml"})
 public class BankTest {
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
@@ -34,7 +37,7 @@ public class BankTest {
 
     @BeforeClass
     public static void beforeClass() throws CustomerException {
-        customer = new Customer("dan", new Date(Date.valueOf("1982-10-12").getTime()), 100.00, "abc@test.com");
+        customer = new Customer("dan", new Date(Date.valueOf("1982-10-12").getTime()), 100.00, "abc@test.com", false);
     }
 
     @Before
@@ -62,10 +65,21 @@ public class BankTest {
     @Test
     @Transactional
     @Rollback(true)
-    public void should_throw_exception_when_add_customer_with_same_nickname() throws CustomerException{
+    public void should_throw_exception_when_add_customer_with_same_nickname() throws CustomerException {
         expectedException.expect(CustomerException.class);
 
         bank.addCustomer(customer);
         bank.addCustomer(customer);
+    }
+
+    @Test
+    @Transactional
+    @Rollback(true)
+    public void should_send_email_to_customer_after_registration() throws CustomerException {
+        bank.addCustomer(customer);
+
+        WiserMessage message = wiser.getMessages().get(0);
+
+        assertNotNull(message);
     }
 }

@@ -6,5 +6,6 @@ CREATE MEMORY TABLE customer
   dateOfBirth DATE NOT NULL,
   balance DOUBLE NOT NULL,
   emailAddress VARCHAR(45),
+  isPremium TINYINT,
   PRIMARY KEY (nickname)
 );

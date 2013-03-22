@@ -170,6 +170,6 @@ public class CustomerControllerTest {
     }
 
     private void addCustomerToBank() throws CustomerException {
-        bank.addCustomer(new Customer("dan", new Date(Date.valueOf("1982-10-12").getTime()), 100.00, "abc@test.com"));
+        bank.addCustomer(new Customer("dan", new Date(Date.valueOf("1982-10-12").getTime()), 100.00, "abc@test.com", false));
     }
 }

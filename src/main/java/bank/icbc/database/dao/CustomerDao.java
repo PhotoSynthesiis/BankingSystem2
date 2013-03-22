@@ -26,8 +26,8 @@ public class CustomerDao {
     }
 
     public void update(Customer customer) {
-        String SQL = "update customer set dateOfBirth = ?, balance = ?, emailAddress = ? where nickname = ?";
+        String SQL = "update customer set dateOfBirth = ?, balance = ?, emailAddress = ?, isPremium = ? where nickname = ?";
         jdbcTemplate.update(SQL, new Object[]{customer.getDateOfBirth(),
-                customer.getBalance(), customer.getEmailAddress(), customer.getNickname()});
+                customer.getBalance(), customer.getEmailAddress(), customer.isPremium(), customer.getNickname()});
     }
 }

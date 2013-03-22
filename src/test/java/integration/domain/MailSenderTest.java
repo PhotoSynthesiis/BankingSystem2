@@ -39,10 +39,10 @@ public class MailSenderTest {
     }
 
     @Test
-    public void should_form_correct_email_content() throws MessagingException, IOException {
+    public void should_form_correct_email_content_for_user_registration() throws MessagingException, IOException {
         String nickname = "nick";
         String emailAddress = "nick@test.com";
-        mailSender.sendEmail(nickname, emailAddress);
+        mailSender.sendEmailAfterUserRegistration(nickname, emailAddress);
 
         WiserMessage wiserMessage = wiser.getMessages().get(0);
         String expectedContent = "Dear nick, welcome to the bank";
@@ -51,10 +51,22 @@ public class MailSenderTest {
     }
 
     @Test
+    public void should_form_correct_email_content_for_premium_user() throws MessagingException, IOException {
+        String nickname = "nick";
+        String emailAddress = "nick@test.com";
+        mailSender.sendEmailWhenUserBecomePremium(nickname, emailAddress);
+
+        WiserMessage wiserMessage = wiser.getMessages().get(0);
+        String expectedContent = "nick is now a premium customer";
+
+        assertThat(wiserMessage.getMimeMessage().getContent().toString().trim(), is(expectedContent));
+    }
+
+    @Test
     public void should_send_email_successfully() throws MessagingException, IOException {
         String customerNickname = "adam";
         String customerEmail = "adam@test.com";
-        mailSender.sendEmail(customerNickname, customerEmail);
+        mailSender.sendEmailAfterUserRegistration(customerNickname, customerEmail);
 
         WiserMessage wiserMessage = wiser.getMessages().get(0);
         String expectedReceiver = "adam@test.com";

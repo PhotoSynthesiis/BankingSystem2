@@ -19,16 +19,18 @@ public class Customer {
     @Autowired
     @Qualifier("customerService")
     private CustomerService service;
+    private boolean premium;
 
     public Customer() {
         // default constructor to make the CustomerControllerTest pass
     }
 
-    public Customer(String nickname, Date dateOfBirth, double balance, String emailAddress) throws CustomerException {
+    public Customer(String nickname, Date dateOfBirth, double balance, String emailAddress, boolean isPremium) throws CustomerException {
         setNickname(nickname);
         setDateOfBirth(dateOfBirth);
         setBalance(balance);
         setEmailAddress(emailAddress);
+        setPremium(isPremium);
     }
 
     public void setNickname(String nickname) throws CustomerException {
@@ -80,5 +82,13 @@ public class Customer {
 
     public void withdraw(double balance, String nickname) throws BalanceOverdrawException {
         service.withdraw(nickname, balance);
+    }
+
+    public boolean isPremium() {
+        return premium;
+    }
+
+    public void setPremium(boolean premium) {
+        this.premium = premium;
     }
 }

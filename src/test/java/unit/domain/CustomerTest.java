@@ -20,7 +20,7 @@ public class CustomerTest {
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
-    private Customer customerToBeSet;
+    private Customer customer;
     private Wiser wiser;
 
     @Before
@@ -29,7 +29,7 @@ public class CustomerTest {
         wiser.setPort(25000);
         wiser.start();
 
-        customerToBeSet = new Customer("dan", new Date(Date.valueOf("1982-10-12").getTime()), 100.00, "abc@test.com");
+        customer = new Customer("dan", new Date(Date.valueOf("1982-10-12").getTime()), 100.00, "abc@test.com", false);
     }
 
     @After
@@ -42,7 +42,7 @@ public class CustomerTest {
         expectedException.expect(CustomerException.class);
 
         String nickName = "";
-        customerToBeSet.setNickname(nickName);
+        customer.setNickname(nickName);
     }
 
     @Test
@@ -50,39 +50,39 @@ public class CustomerTest {
         expectedException.expect(CustomerException.class);
 
         String nickName = "       ";
-        customerToBeSet.setNickname(nickName);
+        customer.setNickname(nickName);
     }
 
     @Test
     public void should_throw_exception_when_nickname_contains_special_characters() throws CustomerException {
         expectedException.expect(CustomerException.class);
         String nickName = "^&*";
-        customerToBeSet.setNickname(nickName);
+        customer.setNickname(nickName);
     }
 
     @Test
     public void should_throw_exception_when_nickname_contains_upper_case() throws CustomerException {
         expectedException.expect(CustomerException.class);
         String nickName = "A2s";
-        customerToBeSet.setNickname(nickName);
+        customer.setNickname(nickName);
     }
 
     @Test
     public void should_set_nickname_successfully() throws CustomerException {
         String nickname = "bradpit";
-        customerToBeSet.setNickname(nickname);
+        customer.setNickname(nickname);
     }
 
     @Test
     public void should_throw_exception_when_dateOfBirth_is_null() throws CustomerException {
         expectedException.expect(CustomerException.class);
         Date dateOfBirth = null;
-        customerToBeSet.setDateOfBirth(dateOfBirth);
+        customer.setDateOfBirth(dateOfBirth);
     }
 
     @Test
     public void should_set_dateOfBirth_successfully() throws CustomerException {
-        customerToBeSet.setDateOfBirth(new Date(Date.valueOf("1988-10-02").getTime()));
+        customer.setDateOfBirth(new Date(Date.valueOf("1988-10-02").getTime()));
     }
 
     @Test
@@ -90,7 +90,7 @@ public class CustomerTest {
         expectedException.expect(CustomerException.class);
 
         String emailAddress = "%^&";
-        customerToBeSet.setEmailAddress(emailAddress);
+        customer.setEmailAddress(emailAddress);
     }
 
     @Test
@@ -98,7 +98,7 @@ public class CustomerTest {
         expectedException.expect(CustomerException.class);
 
         String emailAddress = "a@b@c.com";
-        customerToBeSet.setEmailAddress(emailAddress);
+        customer.setEmailAddress(emailAddress);
     }
 
     @Test
@@ -106,7 +106,7 @@ public class CustomerTest {
         expectedException.expect(CustomerException.class);
 
         String emailAddress = "";
-        customerToBeSet.setEmailAddress(emailAddress);
+        customer.setEmailAddress(emailAddress);
     }
 
     @Test
@@ -114,12 +114,12 @@ public class CustomerTest {
         expectedException.expect(CustomerException.class);
 
         String emailAddress = "    ";
-        customerToBeSet.setEmailAddress(emailAddress);
+        customer.setEmailAddress(emailAddress);
     }
 
     @Test
     public void should_set_email_address_successfully() throws CustomerException {
         String emailAddress = "abc@test.com";
-        customerToBeSet.setEmailAddress(emailAddress);
+        customer.setEmailAddress(emailAddress);
     }
 }

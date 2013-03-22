@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import static bank.icbc.domain.TransactionType.DEPOSIT;
+import static bank.icbc.domain.TransactionType.WITHDRAW;
+
 @Service("customerService")
 public class CustomerService {
 
@@ -15,13 +18,19 @@ public class CustomerService {
 
     public void withdraw(String nickname, double balanceToWithdraw) throws BalanceOverdrawException {
         Customer customer = customerDao.get(nickname);
-        customer.setBalance(calculateBalanceLeft(nickname, balanceToWithdraw, TransactionType.WITHDRAW));
+        customer.setBalance(calculateBalanceLeft(nickname, balanceToWithdraw, WITHDRAW));
+
         customerDao.update(customer);
     }
 
     public void deposit(String nickname, double balanceToDeposit) throws BalanceOverdrawException {
         Customer customer = customerDao.get(nickname);
-        customer.setBalance(calculateBalanceLeft(nickname, balanceToDeposit, TransactionType.DEPOSIT));
+
+        customer.setBalance(calculateBalanceLeft(nickname, balanceToDeposit, DEPOSIT));
+
+        if (customer.getBalance() > 40000) {
+            customer.setPremium(true);
+        }
 
         customerDao.update(customer);
     }
@@ -32,14 +41,21 @@ public class CustomerService {
     }
 
     private double calculateBalanceLeft(String nickname, double balance, TransactionType transactionType) throws BalanceOverdrawException {
-        if (transactionType.equals(TransactionType.DEPOSIT)) {
-             return getBalance(nickname) + balance;
+        if (transactionType.equals(DEPOSIT)) {
+            return getBalance(nickname) + balance;
         }
 
+        return handleWithdraw(nickname, balance);
+    }
+
+    private double handleWithdraw(String nickname, double balance) throws BalanceOverdrawException {
         double balanceAfter = getBalance(nickname) - balance;
-        if (balanceAfter < 0) {
+        if (balanceAfter < 0)
+
+        {
             throw new BalanceOverdrawException("You have only " + getBalance(nickname) + "$. You can not overdraw ");
         }
+
         return balanceAfter;
     }
 }

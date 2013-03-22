@@ -28,7 +28,7 @@ public class Bank {
     }
 
     private void sendEmailToCustomer(Customer customer) {
-        mailSender.sendEmail(customer.getNickname(), customer.getEmailAddress());
+        mailSender.sendEmailAfterUserRegistration(customer.getNickname(), customer.getEmailAddress());
     }
 
     public Customer getCustomer(String nickname) throws CustomerException {
