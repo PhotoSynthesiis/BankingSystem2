@@ -18,8 +18,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import org.subethamail.wiser.Wiser;
+import org.subethamail.wiser.WiserMessage;
 
 import java.sql.Date;
+import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -182,14 +184,34 @@ public class CustomerServiceTest {
         assertThat(premiumCustomer.isPremium(), is(isPremiumCustomer));
     }
 
-//    @Test
-//    @Transactional
-//    @Rollback(true)
-//    public void should_the_user_become_premium_when_balance_is_over_40000() throws BalanceOverdrawException {
-//        service.deposit(customer.getNickname(), 40000.00);
-//
-//        boolean hasBecomePremium = true;
-//
-//        assertThat(customer.isPremium() , is(hasBecomePremium));
-//    }
+    @Test
+    @Transactional
+    @Rollback(true)
+    public void should_send_email_to_manager_once_customer_become_premium() throws BalanceOverdrawException {
+        int balanceToDeposit = 40000;
+        service.deposit(customer.getNickname(), balanceToDeposit);
+
+        WiserMessage message = getEmailSentToManager();
+
+        assertThat(message.getEnvelopeSender(), is("admin@thebank.com"));
+        assertThat(message.getEnvelopeReceiver(), is("manager@thebank.com"));
+    }
+
+    @Test
+    @Transactional
+    @Rollback(true)
+    public void should_not_send_customer_become_premium_email_to_customer_more_than_once() throws BalanceOverdrawException {
+        int balanceToDeposit = 40000;
+        service.deposit(customer.getNickname(), balanceToDeposit);
+        service.deposit(customer.getNickname(), balanceToDeposit);
+
+        List<WiserMessage> messages = wiser.getMessages();
+
+        assertThat(messages.size(), is(2));
+    }
+
+    private WiserMessage getEmailSentToManager() {
+        return wiser.getMessages().get(1);
+    }
+
 }

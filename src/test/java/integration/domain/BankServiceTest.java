@@ -2,6 +2,7 @@ package integration.domain;
 
 import bank.icbc.domain.BankService;
 import bank.icbc.domain.Customer;
+import bank.icbc.domain.CustomerStatus;
 import bank.icbc.exception.CustomerException;
 import org.junit.After;
 import org.junit.Before;
@@ -87,5 +88,15 @@ public class BankServiceTest {
         WiserMessage message = wiser.getMessages().get(0);
 
         assertNotNull(message);
+    }
+
+    @Test
+    @Transactional
+    @Rollback(true)
+    public void should_set_customer_init_status_in_registration() throws CustomerException {
+        bankService.addCustomer(customer);
+
+        CustomerStatus customerStatus = bankService.getCustomerStatusFor(customer.getNickname());
+        assertNotNull(customerStatus);
     }
 }

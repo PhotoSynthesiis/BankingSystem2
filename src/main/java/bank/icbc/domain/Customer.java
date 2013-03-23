@@ -21,8 +21,8 @@ public class Customer {
     private CustomerService service;
     private boolean premium;
 
+    // default constructor to make the CustomerControllerTest pass
     public Customer() {
-        // default constructor to make the CustomerControllerTest pass
     }
 
     public Customer(String nickname, Date dateOfBirth, double balance, String emailAddress, boolean isPremium) throws CustomerException {
