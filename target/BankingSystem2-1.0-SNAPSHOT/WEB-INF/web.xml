@@ -34,6 +34,6 @@
 
     <error-page>
         <exception-type>bank.icbc.exception.CustomerException</exception-type>
-        <location>/WEB-INF/jsp/exception.jsp</location>
+        <location>/WEB-INF/jsp/Exception.jsp</location>
     </error-page>
 </web-app>

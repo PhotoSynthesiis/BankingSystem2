@@ -15,9 +15,9 @@ public class CustomerDao {
     private JdbcTemplate jdbcTemplate;
 
     public void add(Customer customer) {
-        String SQL = "insert into customer (nickname, dateOfBirth, balance, emailAddress) values (?, ?, ?, ?)";
+        String SQL = "insert into customer (nickname, dateOfBirth, balance, emailAddress, isPremium) values (?, ?, ?, ?, ?)";
         jdbcTemplate.update(SQL, new Object[]{customer.getNickname(), customer.getDateOfBirth(),
-                customer.getBalance(), customer.getEmailAddress()});
+                    customer.getBalance(), customer.getEmailAddress(), customer.isPremium()});
     }
 
     public Customer get(String nickname) {
