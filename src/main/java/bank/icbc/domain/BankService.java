@@ -3,6 +3,7 @@ package bank.icbc.domain;
 import bank.icbc.database.dao.BankDao;
 import bank.icbc.database.dao.CustomerDao;
 import bank.icbc.exception.CustomerException;
+import bank.icbc.util.EmailMessageGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DuplicateKeyException;
@@ -21,6 +22,7 @@ public class BankService {
     private BankDao bankDao;
 
     @Autowired
+    @Qualifier("mailSender")
     private MailSender mailSender;
 
     public void addCustomer(Customer customer) throws CustomerException {
@@ -48,11 +50,7 @@ public class BankService {
     }
 
     private void sendEmailToCustomer(Customer customer) {
-        mailSender.sendEmailToCustomerAfterRegistration(customer.getNickname(), customer.getEmailAddress());
-    }
-
-    public void sendEmailToManger(String nickname) {
-        mailSender.sendEmailToManagerWhenUserBecomePremium(nickname);
+        mailSender.sendEmail(EmailMessageGenerator.buildEmailMessageSendToCustomerAfterRegistration(customer));
     }
 
     public boolean isPremiumEmailHasSentToCustomer(String nickname) {

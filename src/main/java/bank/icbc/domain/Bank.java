@@ -20,10 +20,6 @@ public class Bank {
         return bankService.getCustomer(nickname);
     }
 
-    public void sendEmailToManager(String nickname) {
-        bankService.sendEmailToManger(nickname);
-    }
-
     public boolean checkPremiumEmailSentStatusOf(String nickname) {
         return bankService.isPremiumEmailHasSentToCustomer(nickname);
     }

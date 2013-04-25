@@ -1,11 +1,15 @@
 package integration.domain;
 
+import bank.icbc.domain.Customer;
 import bank.icbc.domain.MailSender;
+import bank.icbc.exception.CustomerException;
+import bank.icbc.util.EmailMessageGenerator;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.subethamail.wiser.Wiser;
@@ -24,6 +28,7 @@ public class MailSenderTest {
     private Wiser wiser;
 
     @Autowired
+    @Qualifier("mailSender")
     private MailSender mailSender;
 
     @Before
@@ -39,11 +44,12 @@ public class MailSenderTest {
     }
 
     @Test
-    public void should_form_correct_email_content_for_user_registration() throws MessagingException, IOException {
-        String nickname = "nick";
-        String emailAddress = "nick@test.com";
-        mailSender.sendEmailToCustomerAfterRegistration(nickname, emailAddress);
+    public void should_form_correct_email_content_for_user_registration() throws MessagingException, IOException, CustomerException {
+        Customer customer = new Customer();
+        customer.setNickname("nick");
+        customer.setEmailAddress("nick@test.com");
 
+        mailSender.sendEmail(EmailMessageGenerator.buildEmailMessageSendToCustomerAfterRegistration(customer));
         WiserMessage wiserMessage = wiser.getMessages().get(0);
         String expectedContent = "Dear nick, welcome to the bank";
 
@@ -53,7 +59,7 @@ public class MailSenderTest {
     @Test
     public void should_form_correct_email_content_for_premium_user() throws MessagingException, IOException {
         String nickname = "nick";
-        mailSender.sendEmailToManagerWhenUserBecomePremium(nickname);
+        mailSender.sendEmail(EmailMessageGenerator.buildEmailMessageSendToManagerAfterCustomerBecomePremium(nickname));
 
         WiserMessage wiserMessage = wiser.getMessages().get(0);
         String expectedContent = "nick is now a premium customer";
@@ -62,13 +68,14 @@ public class MailSenderTest {
     }
 
     @Test
-    public void should_send_email_successfully() throws MessagingException, IOException {
-        String customerNickname = "adam";
-        String customerEmail = "adam@test.com";
-        mailSender.sendEmailToCustomerAfterRegistration(customerNickname, customerEmail);
+    public void should_send_email_successfully() throws MessagingException, IOException, CustomerException {
+        Customer customer = new Customer();
+        customer.setNickname("adam");
+        customer.setEmailAddress("adam@thebank.com");
 
+        mailSender.sendEmail(EmailMessageGenerator.buildEmailMessageSendToCustomerAfterRegistration(customer));
         WiserMessage wiserMessage = wiser.getMessages().get(0);
-        String expectedReceiver = "adam@test.com";
+        String expectedReceiver = "adam@thebank.com";
         String expectedSender = "admin@thebank.com";
         String expectedSubject = "Welcome!";
         String expectedContent = "Dear adam, welcome to the bank";

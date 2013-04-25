@@ -3,6 +3,7 @@ package bank.icbc.domain;
 import bank.icbc.database.dao.CustomerDao;
 import bank.icbc.domain.enums.TransactionType;
 import bank.icbc.exception.BalanceOverdrawException;
+import bank.icbc.util.EmailMessageGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,10 @@ public class CustomerService {
     @Qualifier("bank")
     private Bank bank;
 
+    @Autowired
+    @Qualifier("mailSender")
+    private MailSender mailSender;
+
     private static int balanceAmountEnoughToBecomePremiumCustomer = 40000;
 
     public void withdraw(String nickname, double balanceToWithdraw) throws BalanceOverdrawException {
@@ -35,19 +40,22 @@ public class CustomerService {
 
         customer.setBalance(calculateBalanceLeft(nickname, balanceToDeposit, DEPOSIT));
 
-        if (!bank.checkPremiumEmailSentStatusOf(customer.getNickname())) {
-            if (customer.getBalance() > balanceAmountEnoughToBecomePremiumCustomer) {
-                customer.setPremium(true);
-                sendEmailToManager(customer);
-            }
+        if (neverBeenPremiumCustomerAndNowMeetTheStandard(customer)) {
+            sendEmailToManager(customer);
+            customer.setPremium(true);
         }
 
         customerDao.update(customer);
     }
 
+    private boolean neverBeenPremiumCustomerAndNowMeetTheStandard(Customer customer) {
+        return !bank.checkPremiumEmailSentStatusOf(customer.getNickname()) &&
+                customer.getBalance() > balanceAmountEnoughToBecomePremiumCustomer;
+    }
+
     private void sendEmailToManager(Customer customer) {
+        mailSender.sendEmail(EmailMessageGenerator.buildEmailMessageSendToManagerAfterCustomerBecomePremium(customer.getNickname()));
         bank.emailToManagerHasBeenSent(customer.getNickname());
-        bank.sendEmailToManager(customer.getNickname());
     }
 
     public double getBalance(String nickname) {

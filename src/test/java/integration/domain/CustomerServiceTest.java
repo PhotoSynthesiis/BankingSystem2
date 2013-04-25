@@ -194,7 +194,7 @@ public class CustomerServiceTest {
         WiserMessage message = getEmailSentToManager();
 
         assertThat(message.getEnvelopeSender(), is("admin@thebank.com"));
-        assertThat(message.getEnvelopeReceiver(), is("manager@thebank.com"));
+        assertThat(message.getEnvelopeReceiver(), is("qsli@thoughtworks.com"));
     }
 
     @Test
