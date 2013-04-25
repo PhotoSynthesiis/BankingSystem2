@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="0.026" errors="0" skipped="0" tests="12" name="unit.domain.CustomerTest">
+<testsuite failures="0" time="0.02" errors="0" skipped="0" tests="12" name="unit.domain.CustomerTest">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Libraries"/>
@@ -65,15 +65,15 @@
     <property name="sun.cpu.isalist" value=""/>
   </properties>
   <testcase time="0.005" classname="unit.domain.CustomerTest" name="should_throw_exception_when_email_address_contains_two_at_icons"/>
-  <testcase time="0.001" classname="unit.domain.CustomerTest" name="should_throw_exception_when_nickname_contains_only_space"/>
+  <testcase time="0.002" classname="unit.domain.CustomerTest" name="should_throw_exception_when_nickname_contains_only_space"/>
   <testcase time="0.001" classname="unit.domain.CustomerTest" name="should_throw_exception_when_nickname_contains_special_characters"/>
-  <testcase time="0.002" classname="unit.domain.CustomerTest" name="should_throw_exception_when_email_address_contains_special_character"/>
-  <testcase time="0.002" classname="unit.domain.CustomerTest" name="should_set_nickname_successfully"/>
+  <testcase time="0.001" classname="unit.domain.CustomerTest" name="should_throw_exception_when_email_address_contains_special_character"/>
+  <testcase time="0.001" classname="unit.domain.CustomerTest" name="should_set_nickname_successfully"/>
   <testcase time="0.001" classname="unit.domain.CustomerTest" name="should_set_dateOfBirth_successfully"/>
   <testcase time="0.001" classname="unit.domain.CustomerTest" name="should_set_email_address_successfully"/>
   <testcase time="0.002" classname="unit.domain.CustomerTest" name="should_throw_exception_when_email_address_contains_only_white_space"/>
   <testcase time="0.001" classname="unit.domain.CustomerTest" name="should_throw_exception_when_nickname_contains_upper_case"/>
-  <testcase time="0.005" classname="unit.domain.CustomerTest" name="should_throw_exception_when_email_address_is_empty"/>
-  <testcase time="0.002" classname="unit.domain.CustomerTest" name="should_throw_exception_when_add_customer_without_nickname"/>
-  <testcase time="0.001" classname="unit.domain.CustomerTest" name="should_throw_exception_when_dateOfBirth_is_null"/>
+  <testcase time="0.001" classname="unit.domain.CustomerTest" name="should_throw_exception_when_email_address_is_empty"/>
+  <testcase time="0.001" classname="unit.domain.CustomerTest" name="should_throw_exception_when_add_customer_without_nickname"/>
+  <testcase time="0.002" classname="unit.domain.CustomerTest" name="should_throw_exception_when_dateOfBirth_is_null"/>
 </testsuite>

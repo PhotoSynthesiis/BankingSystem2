@@ -1,6 +1,6 @@
 package bank.icbc.domain;
 
-import bank.icbc.database.dao.BankDao;
+import bank.icbc.common.MailSender;
 import bank.icbc.database.dao.CustomerDao;
 import bank.icbc.exception.CustomerException;
 import bank.icbc.util.EmailMessageGenerator;
@@ -18,10 +18,6 @@ public class BankService {
     private CustomerDao customerDao;
 
     @Autowired
-    @Qualifier("bankDao")
-    private BankDao bankDao;
-
-    @Autowired
     @Qualifier("mailSender")
     private MailSender mailSender;
 
@@ -32,13 +28,7 @@ public class BankService {
             throw new CustomerException("Customer with nickname " + customer.getNickname() + " has already existed");
         }
 
-        setCustomerInitialStatus(customer);
         sendEmailToCustomer(customer);
-    }
-
-    private void setCustomerInitialStatus(Customer customer) {
-        CustomerStatus status = new CustomerStatus(customer.getNickname(), false);
-        bankDao.add(status);
     }
 
     public Customer getCustomer(String nickname) throws CustomerException {
@@ -51,21 +41,5 @@ public class BankService {
 
     private void sendEmailToCustomer(Customer customer) {
         mailSender.sendEmail(EmailMessageGenerator.buildEmailMessageSendToCustomerAfterRegistration(customer));
-    }
-
-    public boolean isPremiumEmailHasSentToCustomer(String nickname) {
-        CustomerStatus status = getCustomerStatusFor(nickname);
-        return status.isEmailToManagerSent();
-    }
-
-    public void emailToManagerHasBeenSent(String nickname) {
-        CustomerStatus status = getCustomerStatusFor(nickname);
-        status.setEmailToManagerSent(true);
-        bankDao.update(status);
-    }
-
-    public CustomerStatus getCustomerStatusFor(String nickname) {
-        CustomerStatus status = bankDao.get(nickname);
-        return status;
     }
 }

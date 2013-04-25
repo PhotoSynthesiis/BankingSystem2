@@ -19,12 +19,4 @@ public class Bank {
     public Customer getCustomer(String nickname) throws CustomerException {
         return bankService.getCustomer(nickname);
     }
-
-    public boolean checkPremiumEmailSentStatusOf(String nickname) {
-        return bankService.isPremiumEmailHasSentToCustomer(nickname);
-    }
-
-    public void emailToManagerHasBeenSent(String nickname) {
-        bankService.emailToManagerHasBeenSent(nickname);
-    }
 }

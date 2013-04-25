@@ -1,5 +1,6 @@
 package bank.icbc.domain;
 
+import bank.icbc.common.MailSender;
 import bank.icbc.database.dao.CustomerDao;
 import bank.icbc.domain.enums.TransactionType;
 import bank.icbc.exception.BalanceOverdrawException;
@@ -44,18 +45,16 @@ public class CustomerService {
             sendEmailToManager(customer);
             customer.setPremium(true);
         }
-
         customerDao.update(customer);
     }
 
     private boolean neverBeenPremiumCustomerAndNowMeetTheStandard(Customer customer) {
-        return !bank.checkPremiumEmailSentStatusOf(customer.getNickname()) &&
+        return !customer.isPremium() &&
                 customer.getBalance() > balanceAmountEnoughToBecomePremiumCustomer;
     }
 
     private void sendEmailToManager(Customer customer) {
         mailSender.sendEmail(EmailMessageGenerator.buildEmailMessageSendToManagerAfterCustomerBecomePremium(customer.getNickname()));
-        bank.emailToManagerHasBeenSent(customer.getNickname());
     }
 
     public double getBalance(String nickname) {
@@ -67,7 +66,6 @@ public class CustomerService {
         if (transactionType.equals(DEPOSIT)) {
             return getBalance(nickname) + balance;
         }
-
         return handleWithdraw(nickname, balance);
     }
 

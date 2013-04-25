@@ -1,7 +1,7 @@
 package integration.domain;
 
 import bank.icbc.domain.Customer;
-import bank.icbc.domain.MailSender;
+import bank.icbc.common.MailSender;
 import bank.icbc.exception.CustomerException;
 import bank.icbc.util.EmailMessageGenerator;
 import org.junit.After;
@@ -41,30 +41,6 @@ public class MailSenderTest {
     @After
     public void tearDown() {
         wiser.stop();
-    }
-
-    @Test
-    public void should_form_correct_email_content_for_user_registration() throws MessagingException, IOException, CustomerException {
-        Customer customer = new Customer();
-        customer.setNickname("nick");
-        customer.setEmailAddress("nick@test.com");
-
-        mailSender.sendEmail(EmailMessageGenerator.buildEmailMessageSendToCustomerAfterRegistration(customer));
-        WiserMessage wiserMessage = wiser.getMessages().get(0);
-        String expectedContent = "Dear nick, welcome to the bank";
-
-        assertThat(wiserMessage.getMimeMessage().getContent().toString().trim(), is(expectedContent));
-    }
-
-    @Test
-    public void should_form_correct_email_content_for_premium_user() throws MessagingException, IOException {
-        String nickname = "nick";
-        mailSender.sendEmail(EmailMessageGenerator.buildEmailMessageSendToManagerAfterCustomerBecomePremium(nickname));
-
-        WiserMessage wiserMessage = wiser.getMessages().get(0);
-        String expectedContent = "nick is now a premium customer";
-
-        assertThat(wiserMessage.getMimeMessage().getContent().toString().trim(), is(expectedContent));
     }
 
     @Test
