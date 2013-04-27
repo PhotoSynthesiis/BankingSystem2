@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.http.HttpServletRequest;
-
 @Controller
 public class CustomerController {
 
@@ -85,7 +83,7 @@ public class CustomerController {
     }
 
     @ExceptionHandler(Exception.class)
-    public String handleException(HttpServletRequest request) {
-        return "exception";
+    public String handleException() {
+        return "Exception";
     }
 }

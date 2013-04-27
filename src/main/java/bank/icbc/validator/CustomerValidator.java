@@ -7,18 +7,11 @@ import java.util.regex.Pattern;
 
 public class CustomerValidator {
     public static boolean isNicknameValid(String nickname) {
-        if (isEmpty(nickname)) {
-            return false;
-        } else {
-            return isLowerLetterOrDigit(nickname);
-        }
+        return !isEmpty(nickname) && isLowerLetterOrDigit(nickname);
     }
 
     public static boolean isEmailAddressValid(String emailAddress) {
-        if (StringUtils.isEmpty(emailAddress) || !isValidAddressFormat(emailAddress)) {
-            return false;
-        }
-        return true;
+        return !(StringUtils.isEmpty(emailAddress) || !isValidAddressFormat(emailAddress));
     }
 
     private static boolean isEmpty(String name) {

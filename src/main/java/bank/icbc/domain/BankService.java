@@ -3,7 +3,7 @@ package bank.icbc.domain;
 import bank.icbc.common.MailSender;
 import bank.icbc.database.dao.CustomerDao;
 import bank.icbc.exception.CustomerException;
-import bank.icbc.util.EmailMessageGenerator;
+import bank.icbc.util.EmailMessageBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DuplicateKeyException;
@@ -40,6 +40,6 @@ public class BankService {
     }
 
     private void sendEmailToCustomer(Customer customer) {
-        mailSender.sendEmail(EmailMessageGenerator.buildEmailMessageSendToCustomerAfterRegistration(customer));
+        mailSender.sendEmail(EmailMessageBuilder.buildEmailMessageSendToCustomerAfterRegistration(customer));
     }
 }

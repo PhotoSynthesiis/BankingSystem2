@@ -4,7 +4,7 @@ import bank.icbc.common.MailSender;
 import bank.icbc.database.dao.CustomerDao;
 import bank.icbc.domain.enums.TransactionType;
 import bank.icbc.exception.BalanceOverdrawException;
-import bank.icbc.util.EmailMessageGenerator;
+import bank.icbc.util.EmailMessageBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -54,7 +54,7 @@ public class CustomerService {
     }
 
     private void sendEmailToManager(Customer customer) {
-        mailSender.sendEmail(EmailMessageGenerator.buildEmailMessageSendToManagerAfterCustomerBecomePremium(customer.getNickname()));
+        mailSender.sendEmail(EmailMessageBuilder.buildEmailMessageSendToManagerAfterCustomerBecomePremium(customer.getNickname()));
     }
 
     public double getBalance(String nickname) {

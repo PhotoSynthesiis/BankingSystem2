@@ -38,11 +38,11 @@ public class BankServiceTest {
     private Customer customer;
     private Wiser wiser;
 
-    private String nickname = "dan";
-    private Date dateOfBirth = new Date(Date.valueOf("1982-10-12").getTime());
-    private double balance = 100.00;
-    private String emailAddress = "abc@test.com";
-    private boolean isPremium = false;
+    private static final String nickname = "dan";
+    private static final Date dateOfBirth = new Date(Date.valueOf("1982-10-12").getTime());
+    private static final double balance = 100.00;
+    private static final String emailAddress = "abc@test.com";
+    private static final boolean isPremium = false;
 
     @Before
     public void setUp() throws CustomerException {

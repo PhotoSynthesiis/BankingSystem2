@@ -1,9 +1,9 @@
 package integration.domain;
 
-import bank.icbc.domain.Customer;
 import bank.icbc.common.MailSender;
+import bank.icbc.domain.Customer;
 import bank.icbc.exception.CustomerException;
-import bank.icbc.util.EmailMessageGenerator;
+import bank.icbc.util.EmailMessageBuilder;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -45,20 +45,19 @@ public class MailSenderTest {
 
     @Test
     public void should_send_email_successfully() throws MessagingException, IOException, CustomerException {
+        // given
         Customer customer = new Customer();
-        customer.setNickname("adam");
         customer.setEmailAddress("adam@thebank.com");
 
-        mailSender.sendEmail(EmailMessageGenerator.buildEmailMessageSendToCustomerAfterRegistration(customer));
+        // when
+        mailSender.sendEmail(EmailMessageBuilder.buildEmailMessageSendToCustomerAfterRegistration(customer));
+
+        // then
         WiserMessage wiserMessage = wiser.getMessages().get(0);
         String expectedReceiver = "adam@thebank.com";
         String expectedSender = "admin@thebank.com";
-        String expectedSubject = "Welcome!";
-        String expectedContent = "Dear adam, welcome to the bank";
 
         assertThat(wiserMessage.getEnvelopeReceiver(), is(expectedReceiver));
         assertThat(wiserMessage.getEnvelopeSender(), is(expectedSender));
-        assertThat(wiserMessage.getMimeMessage().getContent().toString().trim(), is(expectedContent));
-        assertThat(wiserMessage.getMimeMessage().getSubject().trim(), is(expectedSubject));
     }
 }

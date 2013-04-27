@@ -1,5 +1,6 @@
 package integration.controller;
 
+import bank.icbc.controller.CustomerController;
 import bank.icbc.domain.Bank;
 import bank.icbc.domain.Customer;
 import bank.icbc.exception.CustomerException;
@@ -52,6 +53,10 @@ public class CustomerControllerTest {
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
+    private CustomerController customerController;
+
+    private Customer customer;
+
     @Before
     public void setUp() throws CustomerException {
         wiser = new Wiser();
@@ -60,6 +65,10 @@ public class CustomerControllerTest {
 
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
+
+        customer = new Customer("dan", new Date(Date.valueOf("1982-10-12").getTime()), 100.00, "abc@test.com", false);
+
+        customerController = new CustomerController();
     }
 
     @After
@@ -68,16 +77,20 @@ public class CustomerControllerTest {
     }
 
     @Test
-    @Transactional
-    @Rollback(true)
     public void should_return_add_customer() throws Exception {
-        request.setRequestURI("/addCustomer");
-        request.setMethod(HttpMethod.GET.toString());
-        Object controller = mappingHandler.getHandler(request).getHandler();
+        assertThat(customerController.addCustomer(null), is("AddCustomer"));
+    }
 
-        ModelAndView modelAndView = handlerAdapter.handle(request, response, controller);
+    public void should_return_welcome() throws Exception {
+        assertThat(customerController.backToWelcomePage(), is("Welcome"));
+    }
 
-        assertThat("AddCustomer", is(modelAndView.getViewName()));
+    public void should_return_withdraw() throws Exception {
+        assertThat(customerController.goToWithdrawPage(null), is("Withdraw"));
+    }
+
+    public void should_return_deposit() throws Exception {
+        assertThat(customerController.goToDepositPage(null), is("Deposit"));
     }
 
     @Test
@@ -99,47 +112,8 @@ public class CustomerControllerTest {
     @Test
     @Transactional
     @Rollback(true)
-    public void should_return_welcome() throws Exception {
-        request.setRequestURI("/welcome");
-        request.setMethod(HttpMethod.GET.toString());
-
-        Object controller = mappingHandler.getHandler(request).getHandler();
-        ModelAndView modelAndView = handlerAdapter.handle(request, response, controller);
-
-        assertThat("Welcome", is(modelAndView.getViewName()));
-    }
-
-    @Test
-    @Transactional
-    @Rollback(true)
-    public void should_return_withdraw() throws Exception {
-        request.setRequestURI("/withdraw");
-        request.setMethod(HttpMethod.GET.toString());
-
-        Object controller = mappingHandler.getHandler(request).getHandler();
-        ModelAndView modelAndView = handlerAdapter.handle(request, response, controller);
-
-        assertThat("Withdraw", is(modelAndView.getViewName()));
-    }
-
-    @Test
-    @Transactional
-    @Rollback(true)
-    public void should_return_deposit() throws Exception {
-        request.setRequestURI("/deposit");
-        request.setMethod(HttpMethod.GET.toString());
-
-        Object controller = mappingHandler.getHandler(request).getHandler();
-        ModelAndView modelAndView = handlerAdapter.handle(request, response, controller);
-
-        assertThat("Deposit", is(modelAndView.getViewName()));
-    }
-
-    @Test
-    @Transactional
-    @Rollback(true)
     public void should_return_show_balance() throws Exception {
-        addCustomerToBank();
+        bank.addCustomer(customer);
 
         request.setParameter("nickname", "dan");
         request.setParameter("balance", "12.00");
@@ -148,6 +122,7 @@ public class CustomerControllerTest {
 
         Object controller = mappingHandler.getHandler(request).getHandler();
         ModelAndView modelAndView = handlerAdapter.handle(request, response, controller);
+
 
         assertThat("ShowBalance", is(modelAndView.getViewName()));
     }
@@ -156,7 +131,7 @@ public class CustomerControllerTest {
     @Transactional
     @Rollback(true)
     public void should_return_show_balance_test() throws Exception {
-        addCustomerToBank();
+        bank.addCustomer(customer);
 
         request.setParameter("nickname", "dan");
         request.setParameter("balance", "12.00");
@@ -167,9 +142,5 @@ public class CustomerControllerTest {
         ModelAndView modelAndView = handlerAdapter.handle(request, response, controller);
 
         assertThat("ShowBalance", is(modelAndView.getViewName()));
-    }
-
-    private void addCustomerToBank() throws CustomerException {
-        bank.addCustomer(new Customer("dan", new Date(Date.valueOf("1982-10-12").getTime()), 100.00, "abc@test.com", false));
     }
 }
