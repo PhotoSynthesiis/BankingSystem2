@@ -43,6 +43,7 @@ public class BankServiceTest {
     private static final double balance = 100.00;
     private static final String emailAddress = "abc@test.com";
     private static final boolean isPremium = false;
+    private static final Date joinDate = new Date(Date.valueOf("1988-04-03").getTime());
 
     @Before
     public void setUp() throws CustomerException {
@@ -50,7 +51,7 @@ public class BankServiceTest {
         wiser.setPort(25000);
         wiser.start();
 
-        customer = new Customer(nickname, dateOfBirth, balance, emailAddress, isPremium);
+        customer = new Customer(nickname, dateOfBirth, balance, emailAddress, isPremium, joinDate);
     }
 
     @After

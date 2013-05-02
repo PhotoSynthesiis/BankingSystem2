@@ -64,14 +64,14 @@
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase time="0.025" classname="integration.domain.CustomerServiceTest" name="should_always_be_premium_customer_if_once_become_a_premium_customer_and_withdraw_some_money"/>
+  <testcase time="0.026" classname="integration.domain.CustomerServiceTest" name="should_always_be_premium_customer_if_once_become_a_premium_customer_and_withdraw_some_money"/>
   <testcase time="0.012" classname="integration.domain.CustomerServiceTest" name="should_throw_exception_when_overdraw"/>
   <testcase time="0.012" classname="integration.domain.CustomerServiceTest" name="should_deposit_new_balance_successfully"/>
-  <testcase time="0.015" classname="integration.domain.CustomerServiceTest" name="should_send_email_to_manager_once_customer_become_premium"/>
-  <testcase time="0.016" classname="integration.domain.CustomerServiceTest" name="should_become_premium_user_when_balance_is_over_40000"/>
-  <testcase time="0.013" classname="integration.domain.CustomerServiceTest" name="should_withdraw_all_money_in_account_successfully"/>
+  <testcase time="0.016" classname="integration.domain.CustomerServiceTest" name="should_send_email_to_manager_once_customer_become_premium"/>
+  <testcase time="0.015" classname="integration.domain.CustomerServiceTest" name="should_become_premium_user_when_balance_is_over_40000"/>
+  <testcase time="0.012" classname="integration.domain.CustomerServiceTest" name="should_withdraw_all_money_in_account_successfully"/>
   <testcase time="0.012" classname="integration.domain.CustomerServiceTest" name="should_withdraw_successfully"/>
   <testcase time="0.011" classname="integration.domain.CustomerServiceTest" name="should_not_become_premium_user_when_balance_never_over_40000"/>
-  <testcase time="0.019" classname="integration.domain.CustomerServiceTest" name="should_always_be_premium_customer_if_once_become_a_premium_customer_and_withdraw_all_money"/>
+  <testcase time="0.018" classname="integration.domain.CustomerServiceTest" name="should_always_be_premium_customer_if_once_become_a_premium_customer_and_withdraw_all_money"/>
   <testcase time="0.017" classname="integration.domain.CustomerServiceTest" name="should_not_send_customer_become_premium_email_to_customer_more_than_once"/>
 </testsuite>

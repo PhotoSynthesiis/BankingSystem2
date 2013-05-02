@@ -13,9 +13,9 @@ public class CustomerDao {
     private JdbcTemplate jdbcTemplate;
 
     public void add(Customer customer) {
-        String SQL = "insert into customer (nickname, dateOfBirth, balance, emailAddress, isPremium) values (?, ?, ?, ?, ?)";
+        String SQL = "insert into customer (nickname, dateOfBirth, balance, emailAddress, isPremium, joinDate) values (?, ?, ?, ?, ?, ?)";
         jdbcTemplate.update(SQL, new Object[]{customer.getNickname(), customer.getDateOfBirth(),
-                customer.getBalance(), customer.getEmailAddress(), customer.isPremium()});
+                customer.getBalance(), customer.getEmailAddress(), customer.isPremium(), customer.getJoinDate()});
     }
 
     public Customer get(String nickname) {
@@ -24,8 +24,8 @@ public class CustomerDao {
     }
 
     public void update(Customer customer) {
-        String SQL = "update customer set dateOfBirth = ?, balance = ?, emailAddress = ?, isPremium = ? where nickname = ?";
-        jdbcTemplate.update(SQL, new Object[]{customer.getDateOfBirth(),
-                customer.getBalance(), customer.getEmailAddress(), customer.isPremium(), customer.getNickname()});
+        String SQL = "update customer set dateOfBirth = ?, balance = ?, emailAddress = ?, isPremium = ?, joinDate = ? where nickname = ?";
+        jdbcTemplate.update(SQL, new Object[]{customer.getDateOfBirth(), customer.getBalance(), customer.getEmailAddress(),
+                customer.isPremium(), customer.getJoinDate(), customer.getNickname()});
     }
 }

@@ -15,9 +15,10 @@ public class CustomerMapper implements RowMapper<Customer> {
         double balance = rs.getDouble(3);
         String emailAddress = rs.getString(4);
         boolean isPremium = rs.getBoolean(5);
+        Date joinDate = rs.getDate(6);
         Customer customer = null;
         try {
-            customer = new Customer(nickname, dateOfBirth, balance, emailAddress, isPremium);
+            customer = new Customer(nickname, dateOfBirth, balance, emailAddress, isPremium, joinDate);
         } catch (CustomerException e) {
             e.printStackTrace();
         }

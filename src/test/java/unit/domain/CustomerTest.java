@@ -29,7 +29,8 @@ public class CustomerTest {
         wiser.setPort(25000);
         wiser.start();
 
-        customer = new Customer("dan", new Date(Date.valueOf("1982-10-12").getTime()), 100.00, "abc@test.com", false);
+        customer = new Customer("dan", new Date(Date.valueOf("1982-10-12").getTime()), 100.00, "abc@test.com", false,
+                new Date(Date.valueOf("1988-04-03").getTime()));
     }
 
     @After

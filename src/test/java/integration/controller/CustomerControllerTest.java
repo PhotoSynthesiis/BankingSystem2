@@ -66,7 +66,8 @@ public class CustomerControllerTest {
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
 
-        customer = new Customer("dan", new Date(Date.valueOf("1982-10-12").getTime()), 100.00, "abc@test.com", false);
+        customer = new Customer("dan", new Date(Date.valueOf("1982-10-12").getTime()), 100.00, "abc@test.com", false,
+                new Date(Date.valueOf("1988-04-03").getTime()));
 
         customerController = new CustomerController();
     }

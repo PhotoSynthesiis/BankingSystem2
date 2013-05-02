@@ -6,16 +6,8 @@ CREATE MEMORY TABLE customer
   dateOfBirth  DATE        NOT NULL,
   balance      DOUBLE      NOT NULL,
   emailAddress VARCHAR(45) NOT NULL,
-  isPremium    TINYINT,
+  isPremium    TINYINT     NOT NULL,
+  joinDate     DATE,
   PRIMARY KEY (nickname)
 );
 
-
-DROP TABLE IF EXISTS customerStatus;
-
-CREATE MEMORY TABLE customerStatus
-(
-  nickname               VARCHAR(45) NOT NULL,
-  emailToCustomerHasSent TINYINT,
-  PRIMARY KEY (nickname)
-)

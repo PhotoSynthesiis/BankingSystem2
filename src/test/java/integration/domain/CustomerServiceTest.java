@@ -63,8 +63,9 @@ public class CustomerServiceTest {
         int balance = 100;
         String emailAddress = "dan@test.com";
         boolean isPremium = false;
+        Date joinDate = new Date(Date.valueOf("1988-04-03").getTime());
 
-        customer = new Customer(nickname, dateOfBirth, balance, emailAddress, isPremium);
+        customer = new Customer(nickname, dateOfBirth, balance, emailAddress, isPremium, joinDate);
         bank.addCustomer(customer);
     }
 

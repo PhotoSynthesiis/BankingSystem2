@@ -15,6 +15,7 @@ public class Customer {
     private Date dateOfBirth;
     private double balance;
     private String emailAddress;
+    private Date joinDate;
 
     @Autowired
     @Qualifier("customerService")
@@ -25,12 +26,13 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(String nickname, Date dateOfBirth, double balance, String emailAddress, boolean isPremium) throws CustomerException {
+    public Customer(String nickname, Date dateOfBirth, double balance, String emailAddress, boolean isPremium, Date joinDate) throws CustomerException {
         setNickname(nickname);
         setDateOfBirth(dateOfBirth);
         setBalance(balance);
         setEmailAddress(emailAddress);
         setPremium(isPremium);
+        setJoinDate(joinDate);
     }
 
     public void setNickname(String nickname) throws CustomerException {
@@ -90,5 +92,13 @@ public class Customer {
 
     public void setPremium(boolean premium) {
         this.premium = premium;
+    }
+
+    public Date getJoinDate() {
+        return joinDate;
+    }
+
+    public void setJoinDate(Date joinDate) {
+        this.joinDate = joinDate;
     }
 }
