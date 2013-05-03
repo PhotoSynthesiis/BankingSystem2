@@ -45,7 +45,7 @@
     <property name="java.vm.specification.version" value="1.0"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.home" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home"/>
-    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher clean install"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher install"/>
     <property name="java.specification.vendor" value="Sun Microsystems Inc."/>
     <property name="user.language" value="en"/>
     <property name="awt.toolkit" value="apple.awt.CToolkit"/>
@@ -71,5 +71,5 @@
   <testcase time="0" classname="unit.validator.CustomerValidatorTest" name="should_return_false_when_nickname_is_empty"/>
   <testcase time="0" classname="unit.validator.CustomerValidatorTest" name="should_return_false_when_dateOfBirth_is_null"/>
   <testcase time="0" classname="unit.validator.CustomerValidatorTest" name="should_return_false_when_nickname_is_null"/>
-  <testcase time="0.001" classname="unit.validator.CustomerValidatorTest" name="should_return_false_when_nickname_contains_only_space"/>
+  <testcase time="0" classname="unit.validator.CustomerValidatorTest" name="should_return_false_when_nickname_contains_only_space"/>
 </testsuite>

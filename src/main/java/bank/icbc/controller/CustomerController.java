@@ -31,9 +31,7 @@ public class CustomerController {
 
     @RequestMapping(value = "/addCustomer", method = RequestMethod.POST)
     public String saveCustomer(@ModelAttribute Customer customer, ModelMap modelMap) throws CustomerException {
-
         bank.addCustomer(customer);
-
         Customer theCustomer = bank.getCustomer(customer.getNickname());
 
         modelMap.addAttribute("nickname", theCustomer.getNickname());

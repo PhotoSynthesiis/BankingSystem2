@@ -10,6 +10,8 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+
 @Service("bankService")
 public class BankService {
 
@@ -23,6 +25,7 @@ public class BankService {
 
     public void addCustomer(Customer customer) throws CustomerException {
         try {
+            customer.setJoinDate(new Date(System.currentTimeMillis()));
             customerDao.add(customer);
         } catch (DuplicateKeyException exception) {
             throw new CustomerException("Customer with nickname " + customer.getNickname() + " has already existed");

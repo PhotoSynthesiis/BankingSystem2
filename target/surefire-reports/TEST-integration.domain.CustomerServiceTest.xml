@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="0.156" errors="0" skipped="0" tests="10" name="integration.domain.CustomerServiceTest">
+<testsuite failures="0" time="0.148" errors="0" skipped="0" tests="10" name="integration.domain.CustomerServiceTest">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Libraries"/>
@@ -45,7 +45,7 @@
     <property name="java.vm.specification.version" value="1.0"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.home" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home"/>
-    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher clean install"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher install"/>
     <property name="java.specification.vendor" value="Sun Microsystems Inc."/>
     <property name="user.language" value="en"/>
     <property name="awt.toolkit" value="apple.awt.CToolkit"/>
@@ -64,14 +64,14 @@
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase time="0.026" classname="integration.domain.CustomerServiceTest" name="should_always_be_premium_customer_if_once_become_a_premium_customer_and_withdraw_some_money"/>
+  <testcase time="0.023" classname="integration.domain.CustomerServiceTest" name="should_always_be_premium_customer_if_once_become_a_premium_customer_and_withdraw_some_money"/>
   <testcase time="0.012" classname="integration.domain.CustomerServiceTest" name="should_throw_exception_when_overdraw"/>
   <testcase time="0.012" classname="integration.domain.CustomerServiceTest" name="should_deposit_new_balance_successfully"/>
-  <testcase time="0.016" classname="integration.domain.CustomerServiceTest" name="should_send_email_to_manager_once_customer_become_premium"/>
-  <testcase time="0.015" classname="integration.domain.CustomerServiceTest" name="should_become_premium_user_when_balance_is_over_40000"/>
+  <testcase time="0.015" classname="integration.domain.CustomerServiceTest" name="should_send_email_to_manager_once_customer_become_premium"/>
+  <testcase time="0.016" classname="integration.domain.CustomerServiceTest" name="should_become_premium_user_when_balance_is_over_40000"/>
   <testcase time="0.012" classname="integration.domain.CustomerServiceTest" name="should_withdraw_all_money_in_account_successfully"/>
-  <testcase time="0.012" classname="integration.domain.CustomerServiceTest" name="should_withdraw_successfully"/>
+  <testcase time="0.011" classname="integration.domain.CustomerServiceTest" name="should_withdraw_successfully"/>
   <testcase time="0.011" classname="integration.domain.CustomerServiceTest" name="should_not_become_premium_user_when_balance_never_over_40000"/>
-  <testcase time="0.018" classname="integration.domain.CustomerServiceTest" name="should_always_be_premium_customer_if_once_become_a_premium_customer_and_withdraw_all_money"/>
-  <testcase time="0.017" classname="integration.domain.CustomerServiceTest" name="should_not_send_customer_become_premium_email_to_customer_more_than_once"/>
+  <testcase time="0.017" classname="integration.domain.CustomerServiceTest" name="should_always_be_premium_customer_if_once_become_a_premium_customer_and_withdraw_all_money"/>
+  <testcase time="0.016" classname="integration.domain.CustomerServiceTest" name="should_not_send_customer_become_premium_email_to_customer_more_than_once"/>
 </testsuite>

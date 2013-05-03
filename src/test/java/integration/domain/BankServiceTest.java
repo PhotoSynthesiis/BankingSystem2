@@ -43,7 +43,7 @@ public class BankServiceTest {
     private static final double balance = 100.00;
     private static final String emailAddress = "abc@test.com";
     private static final boolean isPremium = false;
-    private static final Date joinDate = new Date(Date.valueOf("1988-04-03").getTime());
+    private static final Date joinDate = new Date(System.currentTimeMillis());
 
     @Before
     public void setUp() throws CustomerException {
@@ -88,5 +88,16 @@ public class BankServiceTest {
         WiserMessage message = wiser.getMessages().get(0);
 
         assertNotNull(message);
+    }
+
+    @Test
+    @Transactional
+    @Rollback(true)
+    public void should_add_join_date_in_customer_registration() throws CustomerException {
+        bankService.addCustomer(customer);
+
+        Customer customerGet = bankService.getCustomer("dan");
+
+        assertThat(joinDate.toString(), is(customerGet.getJoinDate().toString()));
     }
 }
