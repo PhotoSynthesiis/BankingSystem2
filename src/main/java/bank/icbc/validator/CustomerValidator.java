@@ -1,21 +1,21 @@
 package bank.icbc.validator;
 
-import org.springframework.util.StringUtils;
-
 import java.sql.Date;
 import java.util.regex.Pattern;
 
+import static org.springframework.util.StringUtils.isEmpty;
+
 public class CustomerValidator {
     public static boolean isNicknameValid(String nickname) {
-        return !isEmpty(nickname) && isLowerLetterOrDigit(nickname);
+        return !isStringEmpty(nickname) && isLowerLetterOrDigit(nickname);
     }
 
     public static boolean isEmailAddressValid(String emailAddress) {
-        return !(StringUtils.isEmpty(emailAddress) || !isValidAddressFormat(emailAddress));
+        return !(isEmpty(emailAddress) || !isValidAddressFormat(emailAddress));
     }
 
-    private static boolean isEmpty(String name) {
-        return StringUtils.isEmpty(name);
+    private static boolean isStringEmpty(String name) {
+        return isEmpty(name);
     }
 
     private static boolean isLowerLetterOrDigit(String nickname) {

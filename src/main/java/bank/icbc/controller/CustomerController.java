@@ -2,8 +2,6 @@ package bank.icbc.controller;
 
 import bank.icbc.domain.Bank;
 import bank.icbc.domain.Customer;
-import bank.icbc.exception.BalanceOverdrawException;
-import bank.icbc.exception.CustomerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -30,7 +28,7 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "/addCustomer", method = RequestMethod.POST)
-    public String saveCustomer(@ModelAttribute Customer customer, ModelMap modelMap) throws CustomerException {
+    public String saveCustomer(@ModelAttribute Customer customer, ModelMap modelMap) {
         bank.addCustomer(customer);
         Customer theCustomer = bank.getCustomer(customer.getNickname());
 
@@ -53,7 +51,7 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "/deposit", method = RequestMethod.POST)
-    public String deposit(@ModelAttribute("customer") Customer customerObj, ModelMap modelMap) throws BalanceOverdrawException, CustomerException {
+    public String deposit(@ModelAttribute("customer") Customer customerObj, ModelMap modelMap) {
         customer.deposit(customerObj.getBalance(), customerObj.getNickname());
 
         Customer theCustomer = bank.getCustomer(customerObj.getNickname());
@@ -64,7 +62,7 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "/withdraw", method = RequestMethod.POST)
-    public String withdraw(@ModelAttribute("customer") Customer customerObj, ModelMap modelMap) throws BalanceOverdrawException, CustomerException {
+    public String withdraw(@ModelAttribute("customer") Customer customerObj, ModelMap modelMap) {
         customer.withdraw(customerObj.getBalance(), customerObj.getNickname());
 
         Customer theCustomer = bank.getCustomer(customerObj.getNickname());

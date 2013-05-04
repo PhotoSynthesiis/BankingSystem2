@@ -1,6 +1,5 @@
 package bank.icbc.domain;
 
-import bank.icbc.exception.CustomerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -12,11 +11,11 @@ public class Bank {
     @Qualifier("bankService")
     private BankService bankService;
 
-    public void addCustomer(Customer customer) throws CustomerException {
+    public void addCustomer(Customer customer) {
         bankService.addCustomer(customer);
     }
 
-    public Customer getCustomer(String nickname) throws CustomerException {
+    public Customer getCustomer(String nickname) {
         return bankService.getCustomer(nickname);
     }
 }

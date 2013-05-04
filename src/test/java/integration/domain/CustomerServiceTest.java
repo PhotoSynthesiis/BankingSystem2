@@ -4,7 +4,6 @@ import bank.icbc.domain.Bank;
 import bank.icbc.domain.Customer;
 import bank.icbc.domain.CustomerService;
 import bank.icbc.exception.BalanceOverdrawException;
-import bank.icbc.exception.CustomerException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -46,7 +45,7 @@ public class CustomerServiceTest {
     private Customer customer;
 
     @Before
-    public void setUp() throws CustomerException {
+    public void setUp() {
         setUpWiserServer();
         addCustomer();
     }
@@ -57,7 +56,7 @@ public class CustomerServiceTest {
         wiser.start();
     }
 
-    private void addCustomer() throws CustomerException {
+    private void addCustomer() {
         String nickname = "dan";
         Date dateOfBirth = new Date(Date.valueOf("1988-09-03").getTime());
         int balance = 100;
@@ -77,7 +76,7 @@ public class CustomerServiceTest {
     @Test
     @Transactional
     @Rollback(true)
-    public void should_deposit_new_balance_successfully() throws CustomerException, BalanceOverdrawException {
+    public void should_deposit_new_balance_successfully() {
         double balanceToDeposit = 23.00;
         service.deposit(customer.getNickname(), balanceToDeposit);
 
@@ -90,7 +89,7 @@ public class CustomerServiceTest {
     @Test
     @Transactional
     @Rollback(true)
-    public void should_withdraw_successfully() throws CustomerException, BalanceOverdrawException {
+    public void should_withdraw_successfully() {
         double balanceToWithdraw = 50.00;
         service.withdraw(customer.getNickname(), balanceToWithdraw);
 
@@ -103,7 +102,7 @@ public class CustomerServiceTest {
     @Test
     @Transactional
     @Rollback(true)
-    public void should_withdraw_all_money_in_account_successfully() throws CustomerException, BalanceOverdrawException {
+    public void should_withdraw_all_money_in_account_successfully() {
         double balanceToWithdraw = 100.00;
         service.withdraw(customer.getNickname(), balanceToWithdraw);
 
@@ -116,18 +115,17 @@ public class CustomerServiceTest {
     @Test
     @Transactional
     @Rollback(true)
-    public void should_throw_exception_when_overdraw() throws CustomerException, BalanceOverdrawException {
+    public void should_throw_exception_when_overdraw() {
         expectedException.expect(BalanceOverdrawException.class);
 
         double balanceToWithdraw = 400.00;
         service.withdraw(customer.getNickname(), balanceToWithdraw);
     }
 
-
     @Test
     @Transactional
     @Rollback(true)
-    public void should_not_become_premium_user_when_balance_never_over_40000() throws BalanceOverdrawException, CustomerException {
+    public void should_not_become_premium_user_when_balance_never_over_40000() {
         int balanceToDeposit = 39899;
         service.deposit(customer.getNickname(), balanceToDeposit);
 
@@ -140,7 +138,7 @@ public class CustomerServiceTest {
     @Test
     @Transactional
     @Rollback(true)
-    public void should_become_premium_user_when_balance_is_over_40000() throws BalanceOverdrawException, CustomerException {
+    public void should_become_premium_user_when_balance_is_over_40000() {
         int balanceToDeposit = 40000;
         service.deposit(customer.getNickname(), balanceToDeposit);
 
@@ -153,8 +151,7 @@ public class CustomerServiceTest {
     @Test
     @Transactional
     @Rollback(true)
-    public void should_always_be_premium_customer_if_once_become_a_premium_customer_and_withdraw_some_money()
-            throws BalanceOverdrawException, CustomerException {
+    public void should_always_be_premium_customer_if_once_become_a_premium_customer_and_withdraw_some_money() {
 
         int balanceToDeposit = 40000;
         service.deposit(customer.getNickname(), balanceToDeposit);
@@ -171,8 +168,7 @@ public class CustomerServiceTest {
     @Test
     @Transactional
     @Rollback(true)
-    public void should_always_be_premium_customer_if_once_become_a_premium_customer_and_withdraw_all_money()
-            throws BalanceOverdrawException, CustomerException {
+    public void should_always_be_premium_customer_if_once_become_a_premium_customer_and_withdraw_all_money() {
         int balanceToDeposit = 40000;
         service.deposit(customer.getNickname(), balanceToDeposit);
 
@@ -188,7 +184,7 @@ public class CustomerServiceTest {
     @Test
     @Transactional
     @Rollback(true)
-    public void should_send_email_to_manager_once_customer_become_premium() throws BalanceOverdrawException {
+    public void should_send_email_to_manager_once_customer_become_premium() {
         int balanceToDeposit = 40000;
         service.deposit(customer.getNickname(), balanceToDeposit);
 
@@ -201,7 +197,7 @@ public class CustomerServiceTest {
     @Test
     @Transactional
     @Rollback(true)
-    public void should_not_send_customer_become_premium_email_to_customer_more_than_once() throws BalanceOverdrawException {
+    public void should_not_send_customer_become_premium_email_to_customer_more_than_once() {
         int balanceToDeposit = 40000;
         service.deposit(customer.getNickname(), balanceToDeposit);
         service.deposit(customer.getNickname(), balanceToDeposit);

@@ -62,7 +62,7 @@ public class BankServiceTest {
     @Test
     @Transactional
     @Rollback(true)
-    public void should_add_customer_successfully() throws CustomerException {
+    public void should_add_customer_successfully() {
         bankService.addCustomer(customer);
 
         Customer customerGet = bankService.getCustomer("dan");
@@ -72,7 +72,7 @@ public class BankServiceTest {
     @Test
     @Transactional
     @Rollback(true)
-    public void should_throw_exception_when_add_customer_with_same_nickname() throws CustomerException {
+    public void should_throw_exception_when_add_customer_with_same_nickname() {
         expectedException.expect(CustomerException.class);
 
         bankService.addCustomer(customer);
@@ -82,7 +82,7 @@ public class BankServiceTest {
     @Test
     @Transactional
     @Rollback(true)
-    public void should_send_email_to_customer_after_registration() throws CustomerException {
+    public void should_send_email_to_customer_after_registration() {
         bankService.addCustomer(customer);
 
         WiserMessage message = wiser.getMessages().get(0);
@@ -93,7 +93,7 @@ public class BankServiceTest {
     @Test
     @Transactional
     @Rollback(true)
-    public void should_add_join_date_in_customer_registration() throws CustomerException {
+    public void should_add_join_date_in_customer_registration() {
         bankService.addCustomer(customer);
 
         Customer customerGet = bankService.getCustomer("dan");

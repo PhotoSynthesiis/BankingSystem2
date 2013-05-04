@@ -1,6 +1,5 @@
 package bank.icbc.domain;
 
-import bank.icbc.exception.BalanceOverdrawException;
 import bank.icbc.exception.CustomerException;
 import bank.icbc.validator.CustomerValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,7 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(String nickname, Date dateOfBirth, double balance, String emailAddress, boolean isPremium, Date joinDate) throws CustomerException {
+    public Customer(String nickname, Date dateOfBirth, double balance, String emailAddress, boolean isPremium, Date joinDate) {
         setNickname(nickname);
         setDateOfBirth(dateOfBirth);
         setBalance(balance);
@@ -35,7 +34,7 @@ public class Customer {
         setJoinDate(joinDate);
     }
 
-    public void setNickname(String nickname) throws CustomerException {
+    public void setNickname(String nickname) {
 
         if (!CustomerValidator.isNicknameValid(nickname)) {
             throw new CustomerException("Nickname should be combination of lower case of letters and digits (empty value or space is not allowed)");
@@ -44,14 +43,14 @@ public class Customer {
         this.nickname = nickname;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) throws CustomerException {
+    public void setDateOfBirth(Date dateOfBirth) {
         if (!CustomerValidator.isDateOfBirthValid(dateOfBirth)) {
             throw new CustomerException("Date of birth is invalid");
         }
         this.dateOfBirth = dateOfBirth;
     }
 
-    public void setEmailAddress(String emailAddress) throws CustomerException {
+    public void setEmailAddress(String emailAddress) {
         if (!CustomerValidator.isEmailAddressValid(emailAddress)) {
             throw new CustomerException("Format of email address is invalid");
         }
@@ -78,11 +77,11 @@ public class Customer {
         return dateOfBirth;
     }
 
-    public void deposit(double balance, String nickname) throws BalanceOverdrawException {
+    public void deposit(double balance, String nickname) {
         service.deposit(nickname, balance);
     }
 
-    public void withdraw(double balance, String nickname) throws BalanceOverdrawException {
+    public void withdraw(double balance, String nickname) {
         service.withdraw(nickname, balance);
     }
 

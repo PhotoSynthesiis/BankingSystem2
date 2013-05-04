@@ -24,7 +24,7 @@ public class CustomerTest {
     private Wiser wiser;
 
     @Before
-    public void setUp() throws CustomerException {
+    public void setUp() {
         wiser = new Wiser();
         wiser.setPort(25000);
         wiser.start();
@@ -39,7 +39,7 @@ public class CustomerTest {
     }
 
     @Test
-    public void should_throw_exception_when_add_customer_without_nickname() throws CustomerException {
+    public void should_throw_exception_when_add_customer_without_nickname() {
         expectedException.expect(CustomerException.class);
 
         String nickName = "";
@@ -47,7 +47,7 @@ public class CustomerTest {
     }
 
     @Test
-    public void should_throw_exception_when_nickname_contains_only_space() throws CustomerException {
+    public void should_throw_exception_when_nickname_contains_only_space() {
         expectedException.expect(CustomerException.class);
 
         String nickName = "       ";
@@ -55,39 +55,39 @@ public class CustomerTest {
     }
 
     @Test
-    public void should_throw_exception_when_nickname_contains_special_characters() throws CustomerException {
+    public void should_throw_exception_when_nickname_contains_special_characters() {
         expectedException.expect(CustomerException.class);
         String nickName = "^&*";
         customer.setNickname(nickName);
     }
 
     @Test
-    public void should_throw_exception_when_nickname_contains_upper_case() throws CustomerException {
+    public void should_throw_exception_when_nickname_contains_upper_case() {
         expectedException.expect(CustomerException.class);
         String nickName = "A2s";
         customer.setNickname(nickName);
     }
 
     @Test
-    public void should_set_nickname_successfully() throws CustomerException {
+    public void should_set_nickname_successfully() {
         String nickname = "bradpit";
         customer.setNickname(nickname);
     }
 
     @Test
-    public void should_throw_exception_when_dateOfBirth_is_null() throws CustomerException {
+    public void should_throw_exception_when_dateOfBirth_is_null() {
         expectedException.expect(CustomerException.class);
         Date dateOfBirth = null;
         customer.setDateOfBirth(dateOfBirth);
     }
 
     @Test
-    public void should_set_dateOfBirth_successfully() throws CustomerException {
+    public void should_set_dateOfBirth_successfully() {
         customer.setDateOfBirth(new Date(Date.valueOf("1988-10-02").getTime()));
     }
 
     @Test
-    public void should_throw_exception_when_email_address_contains_special_character() throws CustomerException {
+    public void should_throw_exception_when_email_address_contains_special_character() {
         expectedException.expect(CustomerException.class);
 
         String emailAddress = "%^&";
@@ -95,7 +95,7 @@ public class CustomerTest {
     }
 
     @Test
-    public void should_throw_exception_when_email_address_contains_two_at_icons() throws CustomerException {
+    public void should_throw_exception_when_email_address_contains_two_at_icons() {
         expectedException.expect(CustomerException.class);
 
         String emailAddress = "a@b@c.com";
@@ -103,7 +103,7 @@ public class CustomerTest {
     }
 
     @Test
-    public void should_throw_exception_when_email_address_is_empty() throws CustomerException {
+    public void should_throw_exception_when_email_address_is_empty() {
         expectedException.expect(CustomerException.class);
 
         String emailAddress = "";
@@ -111,7 +111,7 @@ public class CustomerTest {
     }
 
     @Test
-    public void should_throw_exception_when_email_address_contains_only_white_space() throws CustomerException {
+    public void should_throw_exception_when_email_address_contains_only_white_space() {
         expectedException.expect(CustomerException.class);
 
         String emailAddress = "    ";
@@ -119,7 +119,7 @@ public class CustomerTest {
     }
 
     @Test
-    public void should_set_email_address_successfully() throws CustomerException {
+    public void should_set_email_address_successfully() {
         String emailAddress = "abc@test.com";
         customer.setEmailAddress(emailAddress);
     }

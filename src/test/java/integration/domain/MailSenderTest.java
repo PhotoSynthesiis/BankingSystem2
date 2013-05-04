@@ -2,7 +2,6 @@ package integration.domain;
 
 import bank.icbc.common.MailSender;
 import bank.icbc.domain.Customer;
-import bank.icbc.exception.CustomerException;
 import bank.icbc.util.EmailMessageBuilder;
 import org.junit.After;
 import org.junit.Before;
@@ -44,7 +43,7 @@ public class MailSenderTest {
     }
 
     @Test
-    public void should_send_email_successfully() throws MessagingException, IOException, CustomerException {
+    public void should_send_email_successfully() throws MessagingException, IOException {
         // given
         Customer customer = new Customer();
         customer.setEmailAddress("adam@thebank.com");

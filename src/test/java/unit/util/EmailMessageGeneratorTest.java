@@ -2,7 +2,6 @@ package unit.util;
 
 import bank.icbc.domain.CustomMailMessage;
 import bank.icbc.domain.Customer;
-import bank.icbc.exception.CustomerException;
 import bank.icbc.util.EmailMessageBuilder;
 import org.junit.Test;
 
@@ -11,7 +10,7 @@ import static org.junit.Assert.assertThat;
 
 public class EmailMessageGeneratorTest {
     @Test
-    public void shouldFormCorrectEmailMessageForUserNotice() throws CustomerException {
+    public void shouldFormCorrectEmailMessageForUserNotice() {
         Customer customer = new Customer();
         customer.setNickname("nick");
         customer.setEmailAddress("nick@thebank.com");
@@ -24,7 +23,7 @@ public class EmailMessageGeneratorTest {
     }
 
     @Test
-    public void shouldFormCorrectEmailMessageForManagerNotice() throws CustomerException {
+    public void shouldFormCorrectEmailMessageForManagerNotice() {
         CustomMailMessage message = EmailMessageBuilder.buildEmailMessageSendToManagerAfterCustomerBecomePremium("nick");
 
         assertThat(message.getFromAddress(), is("admin@thebank.com"));

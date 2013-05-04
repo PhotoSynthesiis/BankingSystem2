@@ -23,7 +23,7 @@ public class BankService {
     @Qualifier("mailSender")
     private MailSender mailSender;
 
-    public void addCustomer(Customer customer) throws CustomerException {
+    public void addCustomer(Customer customer) {
         try {
             customer.setJoinDate(new Date(System.currentTimeMillis()));
             customerDao.add(customer);
@@ -34,7 +34,7 @@ public class BankService {
         sendEmailToCustomer(customer);
     }
 
-    public Customer getCustomer(String nickname) throws CustomerException {
+    public Customer getCustomer(String nickname) {
         try {
             return customerDao.get(nickname);
         } catch (EmptyResultDataAccessException exception) {

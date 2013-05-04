@@ -3,7 +3,6 @@ package integration.controller;
 import bank.icbc.controller.CustomerController;
 import bank.icbc.domain.Bank;
 import bank.icbc.domain.Customer;
-import bank.icbc.exception.CustomerException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -58,7 +57,7 @@ public class CustomerControllerTest {
     private Customer customer;
 
     @Before
-    public void setUp() throws CustomerException {
+    public void setUp() {
         wiser = new Wiser();
         wiser.setPort(25000);
         wiser.start();
